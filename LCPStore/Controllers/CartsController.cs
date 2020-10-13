@@ -16,10 +16,10 @@ namespace LCPStore.Controllers
 
         public CartsController(LCPStoreContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
-        // GET: Carts/Details/5
+        // GET: Carts/Details/1
         public async Task<IActionResult> CartDetails(int? id)
         {
             return View();
