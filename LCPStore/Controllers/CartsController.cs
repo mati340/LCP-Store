@@ -18,7 +18,7 @@ namespace LCPStore.Controllers
         {
             _context = context;
         }
-        //12124
+
         // GET: Carts/Details/5
         public async Task<IActionResult> CartDetails(int? id)
         {
