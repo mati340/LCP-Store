@@ -29,17 +29,17 @@ namespace LCPStore.Data
                 .HasForeignKey(c => c.CategoryId);
 
 
-            modelBuilder.Entity<ProductOrder>().HasKey(k => new { k.ProductId, k.OrderId });
+            modelBuilder.Entity<ProductCartItem>().HasKey(k => new { k.ProductId, k.CartItemId });
 
-            modelBuilder.Entity<ProductOrder>()
+            modelBuilder.Entity<ProductCartItem>()
                 .HasOne(p => p.Product)
-                .WithMany(po => po.ProductOrders)
+                .WithMany(po => po.ProductCartItems)
                 .HasForeignKey(p => p.ProductId);
 
-            modelBuilder.Entity<ProductOrder>()
-                .HasOne(p => p.Order)
-                .WithMany(pc => pc.ProductOrders)
-                .HasForeignKey(o => o.OrderId);
+            modelBuilder.Entity<ProductCartItem>()
+                .HasOne(p => p.CartItem)
+                .WithMany(pc => pc.ProductCartItems)
+                .HasForeignKey(o => o.CartItemId);
 
             //base.OnModelCreating(modelBuilder);
         }

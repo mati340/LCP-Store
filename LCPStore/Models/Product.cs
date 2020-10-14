@@ -12,9 +12,9 @@ namespace LCPStore.Models
         public string Name { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public string Description { get; set; }
+        public double InStock { get; set; }
         public int Price { get; set; }
-        public ICollection<ProductOrder> ProductOrders { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<ProductCartItem> ProductCartItems { get; set; }
         public DateTime Created { get; set; }
         //public byte[] Image { get; set; }
         //public IFormFile ImageFile { get; set; }

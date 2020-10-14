@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LCPStore.Migrations
 {
-    public partial class initialaccount : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,31 +47,13 @@ namespace LCPStore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    InStock = table.Column<double>(nullable: false),
                     Price = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cart",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cart", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cart_Account_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Account",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,13 +108,39 @@ namespace LCPStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cart_Account_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Account",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItem",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: true)
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -143,32 +151,26 @@ namespace LCPStore.Migrations
                         principalTable: "Cart",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CartItem_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrder",
+                name: "ProductCartItem",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    CartItemId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrder", x => new { x.ProductId, x.OrderId });
+                    table.PrimaryKey("PK_ProductCartItem", x => new { x.ProductId, x.CartItemId });
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
+                        name: "FK_ProductCartItem_CartItem_CartItemId",
+                        column: x => x.CartItemId,
+                        principalTable: "CartItem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Product_ProductId",
+                        name: "FK_ProductCartItem_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
@@ -182,14 +184,15 @@ namespace LCPStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cart_OrderId",
+                table: "Cart",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CartItem_CartId",
                 table: "CartItem",
                 column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ProductId",
-                table: "CartItem",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_AccountId",
@@ -197,38 +200,38 @@ namespace LCPStore.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCartItem_CartItemId",
+                table: "ProductCartItem",
+                column: "CartItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductCategory_ProductId",
                 table: "ProductCategory",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductOrder_OrderId",
-                table: "ProductOrder",
-                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartItem");
+                name: "ProductCartItem");
 
             migrationBuilder.DropTable(
                 name: "ProductCategory");
 
             migrationBuilder.DropTable(
-                name: "ProductOrder");
-
-            migrationBuilder.DropTable(
-                name: "Cart");
+                name: "CartItem");
 
             migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Cart");
+
+            migrationBuilder.DropTable(
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Account");

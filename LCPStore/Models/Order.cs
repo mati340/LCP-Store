@@ -24,7 +24,7 @@ namespace LCPStore.Models
         public double TotalPay { get; set; }
         public Delivery Delivery { get; set; }
         public Account Account { get; set; }
-        public ICollection<ProductOrder> ProductOrders { get; set; }
+        public Cart Cart { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; set; }
