@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    [Migration("20201012100014_initial-account")]
-    partial class initialaccount
+    [Migration("20201014142857_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,9 +64,15 @@ namespace LCPStore.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
+                        .IsUnique();
+
+                    b.HasIndex("OrderId")
                         .IsUnique();
 
                     b.ToTable("Cart");
@@ -74,13 +80,12 @@ namespace LCPStore.Migrations
 
             modelBuilder.Entity("LCPStore.Models.CartItem", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -89,8 +94,6 @@ namespace LCPStore.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItem");
                 });
@@ -164,6 +167,9 @@ namespace LCPStore.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("InStock")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -173,6 +179,21 @@ namespace LCPStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("LCPStore.Models.ProductCartItem", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CartItemId");
+
+                    b.HasIndex("CartItemId");
+
+                    b.ToTable("ProductCartItem");
                 });
 
             modelBuilder.Entity("LCPStore.Models.ProductCategory", b =>
@@ -190,26 +211,17 @@ namespace LCPStore.Migrations
                     b.ToTable("ProductCategory");
                 });
 
-            modelBuilder.Entity("LCPStore.Models.ProductOrder", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ProductOrder");
-                });
-
             modelBuilder.Entity("LCPStore.Models.Cart", b =>
                 {
                     b.HasOne("LCPStore.Models.Account", "Account")
                         .WithOne("Cart")
                         .HasForeignKey("LCPStore.Models.Cart", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LCPStore.Models.Order", "Order")
+                        .WithOne("Cart")
+                        .HasForeignKey("LCPStore.Models.Cart", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -219,10 +231,6 @@ namespace LCPStore.Migrations
                     b.HasOne("LCPStore.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId");
-
-                    b.HasOne("LCPStore.Models.Product", "Product")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("LCPStore.Models.Order", b =>
@@ -230,6 +238,21 @@ namespace LCPStore.Migrations
                     b.HasOne("LCPStore.Models.Account", "Account")
                         .WithMany("Orders")
                         .HasForeignKey("AccountId");
+                });
+
+            modelBuilder.Entity("LCPStore.Models.ProductCartItem", b =>
+                {
+                    b.HasOne("LCPStore.Models.CartItem", "CartItem")
+                        .WithMany("ProductCartItems")
+                        .HasForeignKey("CartItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LCPStore.Models.Product", "Product")
+                        .WithMany("ProductCartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LCPStore.Models.ProductCategory", b =>
@@ -242,21 +265,6 @@ namespace LCPStore.Migrations
 
                     b.HasOne("LCPStore.Models.Product", "Product")
                         .WithMany("ProductCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("LCPStore.Models.ProductOrder", b =>
-                {
-                    b.HasOne("LCPStore.Models.Order", "Order")
-                        .WithMany("ProductOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LCPStore.Models.Product", "Product")
-                        .WithMany("ProductOrders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
