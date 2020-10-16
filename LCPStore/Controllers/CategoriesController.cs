@@ -24,13 +24,13 @@ namespace LCPStore.Controllers
         public async Task<IActionResult> CategoryDetails(int? id)
         {
             if (id == null)
-            {
+            {          
                 return NotFound();
             }
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
 
             var category = await _context.Category
-                .Include(p => p.ProductCategories).ThenInclude(p => p.Product)
+                .Include(p => p.Products)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {

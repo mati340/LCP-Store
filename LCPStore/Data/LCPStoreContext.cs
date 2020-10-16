@@ -16,17 +16,6 @@ namespace LCPStore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductCategory>().HasKey(k => new { k.CategoryId, k.ProductId });
-
-            modelBuilder.Entity<ProductCategory>()
-                .HasOne(p => p.Product)
-                .WithMany(pc => pc.ProductCategories)
-                .HasForeignKey(p => p.ProductId);
-            
-            modelBuilder.Entity<ProductCategory>()
-                .HasOne(p => p.Category)
-                .WithMany(pc => pc.ProductCategories)
-                .HasForeignKey(c => c.CategoryId);
 
 
             modelBuilder.Entity<ProductCartItem>().HasKey(k => new { k.ProductId, k.CartItemId });

@@ -141,14 +141,14 @@
 
             <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
                 <div class="row">
-                    @foreach (var product in Model.ProductCategories)
+                    @foreach (var product in Model.Products)
                     {
                         <div class="col-lg-4 col-sm-6">
                             <div class="product-item">
                                 <div class="pi-pic">
                                     @*<div class="tag-sale">ON SALE</div>*@
-                                    <a asp-action="Details" asp-controller="Products" asp-route-id="@product.ProductId">
-                                        <img src="~/img/product/6.jpg" alt="@Html.DisplayFor(model => product.Product.Name)">
+                                    <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                                        <img src="~/img/product/6.jpg" alt="@Html.DisplayFor(model => product.Name)">
                                     </a>
                                     <div class="pi-links">
                                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
@@ -156,9 +156,9 @@
                                     </div>
                                 </div>
                                 <div class="pi-text">
-                                    <a asp-action="Details" asp-controller="Products" asp-route-id="@product.ProductId">
-                                        <h6>$@Html.DisplayFor(model => product.Product.Price),00</h6>
-                                        <p>@Html.DisplayFor(model => product.Product.Name)</p>
+                                    <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                                        <h6>$@Html.DisplayFor(model => product.Price),00</h6>
+                                        <p>@Html.DisplayFor(model => product.Name)</p>
                                     </a>
                                 </div>
                             </div>

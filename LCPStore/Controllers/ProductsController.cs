@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
+using System.IO;
+using System.Threading;
 
 namespace LCPStore.Controllers
 {
@@ -22,7 +24,6 @@ namespace LCPStore.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> ProductDetails(int? id)
         {
-            return View();
 
             if (id == null)
             {
@@ -30,6 +31,7 @@ namespace LCPStore.Controllers
             }
 
             var product = await _context.Product
+                .Include(c => c.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -75,16 +77,23 @@ namespace LCPStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Created")] Product product, string[] Categories)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageFile,Created")] Product product, string cat)
         {
             if (ModelState.IsValid)
             {
                 product.Created = DateTime.Now;
 
-                var categoryList = from c in _context.Category
-                                   where Categories.Contains(c.Id.ToString())
-                                   select new ProductCategory { ProductId = product.Id, Product = product, CategoryId = c.Id, Category = c };
-                product.ProductCategories = categoryList.ToList();
+                using(MemoryStream ms = new MemoryStream())
+                {
+                    product.ImageFile.CopyTo(ms);
+                    product.Image = ms.ToArray();
+                }
+
+                var category = from c in _context.Category
+                               where cat.Contains(c.Id.ToString())
+                               select new Category();
+
+                product.Category = (Category)category;
 
                 _context.Add(product);
                 await _context.SaveChangesAsync();
