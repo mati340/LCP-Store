@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
+using System.Collections;
 
 namespace LCPStore.Controllers
 {
@@ -22,13 +23,14 @@ namespace LCPStore.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> CategoryDetails(int? id)
         {
-            return View();
             if (id == null)
             {
                 return NotFound();
             }
+            ViewBag.Categories = new ArrayList(_context.Category.ToList());
 
             var category = await _context.Category
+                .Include(p => p.ProductCategories).ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -36,6 +38,18 @@ namespace LCPStore.Controllers
             }
 
             return View(category);
+        }
+
+        // Search By Price
+        public async Task<IActionResult> SearchByPrice(String minamount, String maxamount)
+        {
+            int minim = Int32.Parse(minamount);
+            int maxim = Int32.Parse(maxamount);
+            var query = from p in _context.Product
+                        where p.Price >= minim && p.Price <= maxim
+                        select p;
+            return Json(await query.ToListAsync());
+
         }
 
         // GET: Categories

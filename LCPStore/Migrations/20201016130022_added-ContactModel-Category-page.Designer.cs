@@ -4,14 +4,16 @@ using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    partial class LCPStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201016130022_added-ContactModel-Category-page")]
+    partial class addedContactModelCategorypage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
