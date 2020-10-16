@@ -10,42 +10,22 @@ using LCPStore.Models;
 
 namespace LCPStore.Controllers
 {
-    public class ProductsController : Controller
+    public class ContactsController : Controller
     {
         private readonly LCPStoreContext _context;
 
-        public ProductsController(LCPStoreContext context)
+        public ContactsController(LCPStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Products/Details/5
-        public async Task<IActionResult> ProductDetails(int? id)
-        {
-            return View();
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // GET: Products
+        // GET: Contacts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.Contact.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: Contacts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,47 +33,39 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var contact = await _context.Contact
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(contact);
         }
 
-        // GET: Products/Create
+        // GET: Contacts/Create
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(_context.Category.ToList(), "Id", "Name");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Contacts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Created")] Product product, string[] Categories)
+        public async Task<IActionResult> Create([Bind("Id,Name,Subject,Body")] Contact contact)
         {
             if (ModelState.IsValid)
             {
-                product.Created = DateTime.Now;
-
-                var categoryList = from c in _context.Category
-                                   where Categories.Contains(c.Id.ToString())
-                                   select new ProductCategory { ProductId = product.Id, Product = product, CategoryId = c.Id, Category = c };
-                product.ProductCategories = categoryList.ToList();
-
-                _context.Add(product);
+                _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(contact);
         }
 
-        // GET: Products/Edit/5
+        // GET: Contacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,22 +73,22 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var contact = await _context.Contact.FindAsync(id);
+            if (contact == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(contact);
         }
 
-        // POST: Products/Edit/5
+        // POST: Contacts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Created")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Subject,Body")] Contact contact)
         {
-            if (id != product.Id)
+            if (id != contact.Id)
             {
                 return NotFound();
             }
@@ -125,12 +97,12 @@ namespace LCPStore.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(contact);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!ContactExists(contact.Id))
                     {
                         return NotFound();
                     }
@@ -141,10 +113,10 @@ namespace LCPStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(contact);
         }
 
-        // GET: Products/Delete/5
+        // GET: Contacts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -152,30 +124,30 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var contact = await _context.Contact
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(contact);
         }
 
-        // POST: Products/Delete/5
+        // POST: Contacts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var contact = await _context.Contact.FindAsync(id);
+            _context.Contact.Remove(contact);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool ContactExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Contact.Any(e => e.Id == id);
         }
     }
 }

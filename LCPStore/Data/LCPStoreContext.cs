@@ -51,5 +51,7 @@ namespace LCPStore.Data
         public DbSet<LCPStore.Models.Category> Category { get; set; }
 
         public DbSet<LCPStore.Models.Cart> Cart { get; set; }
+
+        public DbSet<LCPStore.Models.Contact> Contact { get; set; }
     }
 }
