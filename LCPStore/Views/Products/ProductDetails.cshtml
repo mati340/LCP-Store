@@ -7,7 +7,7 @@
 <!-- Page info -->
 <div class="page-top-info">
     <div class="container">
-        <h4>Category Page</h4>
+        <h4>Product Page</h4>
         <div class="site-pagination">
             <a asp-action="Index" asp-controller="Home">Home</a> /
             <a href="">Shop</a>
@@ -19,68 +19,34 @@
 <section class="product-section">
     <div class="container">
         <div class="back-link">
-            <a asp-action="CategoryDetails" asp-controller="Category"> &lt;&lt; Back to Category</a>
+            <a asp-action="CategoryDetails" asp-controller="Categories" asp-route-id="@Model.Category.Id"> &lt;&lt; Back to Category</a>
         </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="product-pic-zoom">
-                    <img class="product-big-img" src="~/img/single-product/1.jpg" alt="">
-                </div>
-                <div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
-                    <div class="product-thumbs-track">
-                        <div class="pt active" data-imgbigurl="img/single-product/1.jpg"><img src="~/img/single-product/thumb-1.jpg" alt=""></div>
-                        <div class="pt" data-imgbigurl="img/single-product/2.jpg"><img src="~/img/single-product/thumb-2.jpg" alt=""></div>
-                        <div class="pt" data-imgbigurl="img/single-product/3.jpg"><img src="~/img/single-product/thumb-3.jpg" alt=""></div>
-                        <div class="pt" data-imgbigurl="img/single-product/4.jpg"><img src="~/img/single-product/thumb-4.jpg" alt=""></div>
-                    </div>
+                    @if (Model.Image != null)
+                    {
+                        String img = Convert.ToBase64String(Model.Image);
+                        <img src="data:image/png;base64,@img" height="500" />
+                    }
+                    else
+                    {
+                        <img src="~/img/single-product/1.jpg" alt="">
+                    }
                 </div>
             </div>
             <div class="col-lg-6 product-details">
-                <h2 class="p-title">White peplum top</h2>
-                <h3 class="p-price">$39.90</h3>
+                <h2 class="p-title">@Html.DisplayFor(model => model.Name)</h2>
+                <h3 class="p-price">$@Html.DisplayFor(model => model.Price),00</h3>
                 <h4 class="p-stock">Available: <span>In Stock</span></h4>
-                <div class="p-rating">
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o fa-fade"></i>
-                </div>
-                <div class="p-review">
+                @*<div class="p-review">
                     <a href="">3 reviews</a>|<a href="">Add your review</a>
-                </div>
-                <div class="fw-size-choose">
-                    <p>Size</p>
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="xs-size">
-                        <label for="xs-size">32</label>
-                    </div>
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="s-size">
-                        <label for="s-size">34</label>
-                    </div>
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="m-size" checked="">
-                        <label for="m-size">36</label>
-                    </div>
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="l-size">
-                        <label for="l-size">38</label>
-                    </div>
-                    <div class="sc-item disable">
-                        <input type="radio" name="sc" id="xl-size" disabled>
-                        <label for="xl-size">40</label>
-                    </div>
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="xxl-size">
-                        <label for="xxl-size">42</label>
-                    </div>
-                </div>
+                </div>*@
                 <div class="quantity">
                     <p>Quantity</p>
                     <div class="pro-qty"><input type="text" value="1"></div>
                 </div>
-                <a href="#" class="site-btn">SHOP NOW</a>
+                <a href="#" class="site-btn">ADD TO CART</a>
                 <div id="accordion" class="accordion-area">
                     <div class="panel">
                         <div class="panel-header" id="headingOne">
@@ -88,10 +54,7 @@
                         </div>
                         <div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="panel-body">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
-                                <p>Approx length 66cm/26" (Based on a UK size 8 sample)</p>
-                                <p>Mixed fibres</p>
-                                <p>The Model wears a UK size 8/ EU size 36/ US size 4 and her height is 5'8"</p>
+                                <p>@Html.DisplayFor(model => model.Description).</p>
                             </div>
                         </div>
                     </div>
@@ -101,8 +64,7 @@
                         </div>
                         <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div class="panel-body">
-                                <img src="./img/cards.png" alt="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
+                                <img src="~/img/cards.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -114,7 +76,6 @@
                             <div class="panel-body">
                                 <h4>7 Days Returns</h4>
                                 <p>Cash on Delivery Available<br>Home Delivery <span>3 - 4 days</span></p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
                             </div>
                         </div>
                     </div>
@@ -140,7 +101,7 @@
         <div class="product-slider owl-carousel">
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/1.jpg" alt="">
+                    <img src="~/img/product/1.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -154,7 +115,7 @@
             <div class="product-item">
                 <div class="pi-pic">
                     <div class="tag-new">New</div>
-                    <img src="./img/product/2.jpg" alt="">
+                    <img src="~/img/product/2.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -167,7 +128,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/3.jpg" alt="">
+                    <img src="~/img/product/3.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -180,7 +141,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/4.jpg" alt="">
+                    <img src="~/img/product/4.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -193,7 +154,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/6.jpg" alt="">
+                    <img src="~/img/product/6.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>

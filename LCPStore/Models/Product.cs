@@ -11,7 +11,7 @@ namespace LCPStore.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public Category Category { get; set; }
         public string Description { get; set; }
         //public double InStock { get; set; }
         public int Price { get; set; }
