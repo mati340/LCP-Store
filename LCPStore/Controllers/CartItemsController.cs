@@ -54,10 +54,12 @@ namespace LCPStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart([Bind("Id,Quantity")] CartItem cartItem, string productId)
+        public async Task<IActionResult> AddToCart(int quantity, string productId)
         {
+            CartItem cartItem = new CartItem();
             if (ModelState.IsValid)
             {
+                cartItem.Quantity = quantity;
                 var product = await _context.Product.FirstOrDefaultAsync(s => s.Id.ToString() == productId);
                 cartItem.Product = product;
                 cartItem.TotalPrice = product.Price * cartItem.Quantity;
