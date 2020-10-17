@@ -7,47 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
-using System.IO;
-using System.Threading;
 
 namespace LCPStore.Controllers
 {
-    public class ProductsController : Controller
+    public class CartItemsController : Controller
     {
         private readonly LCPStoreContext _context;
 
-        public ProductsController(LCPStoreContext context)
+        public CartItemsController(LCPStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Products/Details/5
-        public async Task<IActionResult> ProductDetails(int? id)
-        {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Product
-                .Include(c => c.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // GET: Products
+        // GET: CartItems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.CartItem.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: CartItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,52 +33,42 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var cartItem = await _context.CartItem
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(cartItem);
         }
 
-        // GET: Products/Create
+        // GET: CartItems/Create
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(_context.Category.ToList(), "Id", "Name");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: CartItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageFile,Created")] Product product, string categoryId)
+        public async Task<IActionResult> AddToCart([Bind("Id,Quantity")] CartItem cartItem, string productId)
         {
             if (ModelState.IsValid)
             {
-                product.Created = DateTime.Now;
-
-                using(MemoryStream ms = new MemoryStream())
-                {
-                    product.ImageFile.CopyTo(ms);
-                    product.Image = ms.ToArray();
-                }
-
-                var category = await _context.Category.FirstAsync(c => c.Id.ToString() == categoryId);
-
-                product.Category = category;
-
-                _context.Add(product);
+                var product = await _context.Product.FirstOrDefaultAsync(s => s.Id.ToString() == productId);
+                cartItem.Product = product;
+                cartItem.TotalPrice = product.Price * cartItem.Quantity;
+                _context.Add(cartItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(cartItem);
         }
 
-        // GET: Products/Edit/5
+        // GET: CartItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -108,22 +76,22 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var cartItem = await _context.CartItem.FindAsync(id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(cartItem);
         }
 
-        // POST: Products/Edit/5
+        // POST: CartItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Created")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Quantity,TotalPrice")] CartItem cartItem)
         {
-            if (id != product.Id)
+            if (id != cartItem.Id)
             {
                 return NotFound();
             }
@@ -132,12 +100,12 @@ namespace LCPStore.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(cartItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!CartItemExists(cartItem.Id))
                     {
                         return NotFound();
                     }
@@ -148,10 +116,10 @@ namespace LCPStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(cartItem);
         }
 
-        // GET: Products/Delete/5
+        // GET: CartItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -159,30 +127,30 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var cartItem = await _context.CartItem
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(cartItem);
         }
 
-        // POST: Products/Delete/5
+        // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var cartItem = await _context.CartItem.FindAsync(id);
+            _context.CartItem.Remove(cartItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool CartItemExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.CartItem.Any(e => e.Id == id);
         }
     }
 }

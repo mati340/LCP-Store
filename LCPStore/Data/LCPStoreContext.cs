@@ -17,19 +17,6 @@ namespace LCPStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
-            modelBuilder.Entity<ProductCartItem>().HasKey(k => new { k.ProductId, k.CartItemId });
-
-            modelBuilder.Entity<ProductCartItem>()
-                .HasOne(p => p.Product)
-                .WithMany(po => po.ProductCartItems)
-                .HasForeignKey(p => p.ProductId);
-
-            modelBuilder.Entity<ProductCartItem>()
-                .HasOne(p => p.CartItem)
-                .WithMany(pc => pc.ProductCartItems)
-                .HasForeignKey(o => o.CartItemId);
-
             //base.OnModelCreating(modelBuilder);
         }
 
@@ -42,5 +29,7 @@ namespace LCPStore.Data
         public DbSet<LCPStore.Models.Cart> Cart { get; set; }
 
         public DbSet<LCPStore.Models.Contact> Contact { get; set; }
+
+        public DbSet<LCPStore.Models.CartItem> CartItem { get; set; }
     }
 }
