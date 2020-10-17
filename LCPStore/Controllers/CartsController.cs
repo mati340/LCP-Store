@@ -23,7 +23,6 @@ namespace LCPStore.Controllers
         // GET: Carts/Details/1
         public async Task<IActionResult> CartDetails(int? id)
         {
-            return View();
             if (id == null)
             {
                 return NotFound();
@@ -31,13 +30,19 @@ namespace LCPStore.Controllers
 
             var cart = await _context.Cart
                 .Include(c => c.Account)
+                .Include(ci => ci.CartItems)
+                .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cart == null)
             {
                 return NotFound();
             }
+            foreach (var cartItem in cart.CartItems)
+            {
+                cart.SumToPay += cartItem.TotalPrice;
+            }
 
-            return View(cart);
+                return View(cart);
         }
 
         // GET: Carts

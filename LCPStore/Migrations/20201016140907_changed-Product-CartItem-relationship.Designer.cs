@@ -4,14 +4,16 @@ using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    partial class LCPStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201016140907_changed-Product-CartItem-relationship")]
+    partial class changedProductCartItemrelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,9 +67,6 @@ namespace LCPStore.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<double>("SumToPay")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
@@ -94,9 +93,6 @@ namespace LCPStore.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

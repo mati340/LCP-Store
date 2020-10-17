@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201017090316_Added-allowNULL-to-CartOrderId.cs" />
+    <Compile Remove="Migrations\20201017090316_Added-allowNULL-to-CartOrderId.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
