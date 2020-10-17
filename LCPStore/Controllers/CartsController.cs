@@ -19,11 +19,28 @@ namespace LCPStore.Controllers
         {
             _context = context; 
         }
+        public async Task<IActionResult> Plus(int id)
+        {
+            var query = await _context.CartItem.FirstOrDefaultAsync(s => s.Id == id);
+            if (query != null)
+                query.Quantity += 1;
+            await _context.SaveChangesAsync();
+            Object obj = 5;
+            return RedirectToAction(nameof(CartDetails));
+        }
+        
+        public async Task<IActionResult> Minus(int id)
+        {
+            var query = await _context.CartItem.FirstOrDefaultAsync(s => s.Id == id);
+            if (query != null)
+                query.Quantity -= 1;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(CartDetails));
+        }
 
         // GET: Carts/Details/1
         public async Task<IActionResult> CartDetails(int? id)
         {
-            return View();
             if (id == null)
             {
                 return NotFound();
@@ -31,12 +48,17 @@ namespace LCPStore.Controllers
 
             var cart = await _context.Cart
                 .Include(c => c.Account)
+                .Include(ci => ci.CartItems)
+                .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cart == null)
             {
                 return NotFound();
             }
-
+            foreach (var cartItem in cart.CartItems)
+            {
+                cart.SumToPay += cartItem.TotalPrice;
+            }
             return View(cart);
         }
 

@@ -12,6 +12,7 @@ namespace LCPStore.Models
         public Cart Cart { get; set; }
         [DefaultValue(1)]
         public int Quantity { get; set; }
-        public ICollection<ProductCartItem> ProductCartItems { get; set; }
+        public double TotalPrice { get; set; }
+        public Product Product { get; set; }
     }
 }
