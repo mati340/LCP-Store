@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
+using System.Net;
+using System.Net.Mail;
 
 namespace LCPStore.Controllers
 {
@@ -42,9 +44,37 @@ namespace LCPStore.Controllers
 
             return View(contact);
         }
+        [ValidateAntiForgeryToken]
+        public void SendEmail(string Email, string Name)
+        {
+            var fromAddress = new MailAddress("LCPStore4@gmail.com", "LCP Store");
+            var toAddress = new MailAddress(Email, Name);
+            const string fromPassword = "LCP12345678";
+            const string subject = "Thank you for contacting LCP";
+            const string body = "Thank you for contacting LCP support";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                Timeout = 20000
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+        }
 
         // GET: Contacts/Create
-        public IActionResult Create()
+        public IActionResult Contact()
         {
             return View();
         }
@@ -54,12 +84,13 @@ namespace LCPStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Subject,Body")] Contact contact)
+        public async Task<IActionResult> Contact([Bind("Id,Name,Email,Subject,Body")] Contact contact)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
+                SendEmail(contact.Email, contact.Name);
                 return RedirectToAction(nameof(Index));
             }
             return View(contact);
