@@ -12,42 +12,43 @@
                 <h2 class="form-title">Sign up</h2>
                 <form method="POST" class="register-form" id="register-form">
                     <div class="form-group">
-                        <label for="Name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <label asp-for="Name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                         <input type="text" asp-for="Name" id="name" placeholder="Your Name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="Username"><i class="zmdi zmdi-email"></i></label>
+                        <label asp-for="Username"><i class="zmdi zmdi-email"></i></label>
                         <input asp-for="Username" id="email" placeholder="Your Email" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="Password"><i class="zmdi zmdi-lock"></i></label>
+                        <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
                         <input asp-for="Password" id="pass" placeholder="Password" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                         <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
+                        <span>@TempData["Error"]</span>
                     </div>
                     <div class="form-group">
-                        <label for="Gender"><i class="zmdi zmdi-male-female"></i></label>
-                        <select name="Gender" id="gender" placeholder="Your gender">
+                        <label asp-for="Gender"><i class="zmdi zmdi-male-female"></i></label>
+                        <select asp-for="Gender" name="gender" id="gender" placeholder="Your gender">
                             <option value="" selected disabled hidden>---Select---</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
-                        @*<input asp-for="Gender" id="gender" placeholder="Your gender" />*@
                         <span asp-validation-for="Gender" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="BirthDate"><i class="zmdi zmdi-cake"></i></label>
+                        <label asp-for="BirthDate"><i class="zmdi zmdi-cake"></i></label>
                         <input asp-for="BirthDate" asp-area="" id="birthdate" placeholder="Your birth date" />
                         <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <input type="checkbox" name="agree_term" id="agree-term" class="agree-term" value="true" />
                         <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="https://www.termsfeed.com/live/e5e0fcee-4152-4822-ac7f-2744250c5dba" onClick="MyWindow=window.open('https://www.termsfeed.com/live/e5e0fcee-4152-4822-ac7f-2744250c5dba','MyWindow','width=600,height=300'); return false;" class="term-service">Terms of service</a></label>
+                        <span>@TempData["TermsError"]</span>
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />

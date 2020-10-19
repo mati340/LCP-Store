@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace LCPStore
 {
@@ -29,6 +30,10 @@ namespace LCPStore
 
             services.AddDbContext<LCPStoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("LCPStoreContext")));
+
+            services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(2));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,9 @@ namespace LCPStore
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
