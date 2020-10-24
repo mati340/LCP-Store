@@ -126,25 +126,34 @@
                 <!-- menu -->
                 <ul class="main-menu">
                     <li><a asp-action="Index">Home</a></li>
-                    <li><a href="#">Women</a></li>
-                    <li><a href="#">Men</a></li>
                     <li>
-                        <a href="#">
-                            Jewelry
-                            <span class="new">New</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Shoes</a>
+                        <a href="#">Categories</a>
                         <ul class="sub-menu">
-                            <li><a href="#">Sneakers</a></li>
-                            <li><a href="#">Sandals</a></li>
-                            <li><a href="#">Formal Shoes</a></li>
-                            <li><a href="#">Boots</a></li>
-                            <li><a href="#">Flip Flops</a></li>
+                            @foreach(var category in ViewBag.Categories)
+                            {
+                            <li>
+                                <a asp-action="CategoryDetails" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+                            </li>
+                            }
+                            @*<li><a href="#">Outdoors and Camping</a></li>
+        <li><a href="#">Gadgets</a></li>
+        <li><a href="#">Baby Essentials</a></li>
+        <li><a href="#">Convenience</a></li>
+        <li><a href="#">Sports Accessories</a></li>*@
                         </ul>
                     </li>
+                    <li><a href="#">About us</a></li>
+                    @*<li>
+            <a href="#">
+                Jewelry
+                <span class="new">New</span>
+            </a>
+        </li>*@
                     <li>
+                        <a href="#">Contact us</a>
+                       
+                    </li>
+                    @*<li>
                         <a href="#">Pages</a>
                         <ul class="sub-menu">
                             <li><a asp-action="ProductDetails" asp-controller="Products">Product Page</a></li>
@@ -153,8 +162,8 @@
                             <li><a href="./checkout.html">Checkout Page</a></li>
                             <li><a asp-action="Contact">Contact Page</a></li>
                         </ul>
-                    </li>
-                    <li><a href="#">Blog</a></li>
+                    </li>*@
+                 
                 </ul>
             </div>
         </nav>

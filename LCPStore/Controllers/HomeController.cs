@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LCPStore.Models;
+using System.Collections;
+using LCPStore.Data;
 
 namespace LCPStore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly LCPStoreContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, LCPStoreContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -25,7 +29,9 @@ namespace LCPStore.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Categories = new ArrayList(_context.Category.ToList());
             return View();
+
         }
 
         public IActionResult Privacy()
