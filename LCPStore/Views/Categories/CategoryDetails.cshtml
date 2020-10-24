@@ -148,7 +148,15 @@
                                 <div class="pi-pic">
                                     @*<div class="tag-sale">ON SALE</div>*@
                                     <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
-                                        <img src="~/img/product/6.jpg" alt="@Html.DisplayFor(model => product.Name)">
+                                        @if (product.Image != null)
+                                        {
+                                            String img = Convert.ToBase64String(product.Image);
+                                            <img src="data:image/png;base64,@img" alt="@Html.DisplayFor(model => product.Name)">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/img/single-product/1.jpg" alt="@Html.DisplayFor(model => product.Name)">
+                                        }
                                     </a>
                                     <div class="pi-links">
                                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
