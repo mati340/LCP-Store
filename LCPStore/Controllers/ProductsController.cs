@@ -65,6 +65,16 @@ namespace LCPStore.Controllers
             return View(product);
         }
 
+        // Search-Auto Complete
+        public async Task<IActionResult> SearchAuto(string term)
+        {
+            var query = from p in _context.Product
+                        where p.Name.ToLower().Contains(term.ToLower())
+                        select new { id = p.Id, label = p.Name, value = p.Id };
+
+            return Json(await query.ToListAsync());
+        }
+
         // GET: Products/Create
         public IActionResult Create()
         {
