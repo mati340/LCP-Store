@@ -22,11 +22,6 @@ namespace LCPStore.Controllers
             _logger = logger;
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
         public IActionResult Index()
         {
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
