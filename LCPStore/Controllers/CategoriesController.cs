@@ -23,32 +23,37 @@ namespace LCPStore.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> CategoryDetails(int? id)
         {
-            if (id == null)
-            {          
-                return NotFound();
-            }
+            var category = new Category();
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
 
-            var category = await _context.Category
-                .Include(p => p.Products)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (id == null)
             {
-                return NotFound();
+                category = await _context.Category
+                    .Include(p => p.Products)
+                    .FirstOrDefaultAsync();
+            }
+            else {
+                category = await _context.Category
+                    .Include(p => p.Products)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
             }
 
             return View(category);
         }
 
         // Search By Price
-        public async Task<IActionResult> SearchByPrice(String minamount, String maxamount)
+        public async Task<IActionResult> SearchByPrice(string minamount, string maxamount)
         {
-            int minim = Int32.Parse(minamount);
-            int maxim = Int32.Parse(maxamount);
+            int minim = Int32.Parse(minamount.Substring(1));
+            int maxim = Int32.Parse(maxamount.Substring(1));
             var query = from p in _context.Product
                         where p.Price >= minim && p.Price <= maxim
                         select p;
-            return Json(await query.ToListAsync());
+            return Json(await query.ToListAsync()); //TODO
 
         }
 
