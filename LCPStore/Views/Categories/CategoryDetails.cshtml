@@ -50,10 +50,13 @@
                             </span>
                         </div>
                         <div class="range-slider">
-                            <div class="price-input">
-                                <input type="text" id="minamount">
-                                <input type="text" id="maxamount">
-                            </div>
+                            <form asp-action="SearchByPrice">
+                                <div class="price-input">
+                                    <input type="text" name="minamount" id="minamount">
+                                    <input type="text" name="maxamount" id="maxamount">
+                                    <button class="site-btn">Filter</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ namespace LCPStore.Controllers
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), "Home");
         }
         // GET: Accounts
         public async Task<IActionResult> Index()

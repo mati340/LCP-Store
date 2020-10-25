@@ -627,7 +627,7 @@ ol {
 .hero-slider .owl-dots .owl-dot {
 	width: 8px;
 	height: 8px;
-	background: #fff;
+	background: #212529;
 	border-radius: 15px;
 	margin-right: 10px;
 	opacity: 0.25;
@@ -645,7 +645,7 @@ ol {
 .hero-slider .owl-nav button.owl-prev {
 	font-size: 27px;
 	position: absolute;
-	color: #fff;
+	color: #212529;
 	opacity: 0.5;
 	bottom: -20px;
 }

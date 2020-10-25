@@ -93,7 +93,7 @@
                 <div class="row">
                     <div class="col-lg-2 text-center text-lg-left">
                         <!-- logo -->
-                        <a asp-action="Index" class="site-logo">
+                        <a asp-action="Index" asp-controller="Home" class="site-logo">
                             <img src="~/img/logo2.png" alt="">
                         </a>
                     </div>
@@ -105,17 +105,29 @@
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="user-panel">
-                            <div class="up-item">
-                                <i class="flaticon-profile"></i>
-                                <a asp-action="Login" asp-controller="Accounts">Sign In</a>  or  <a asp-action="Register" asp-controller="Accounts">Create Account</a>
-                            </div>
-                            <div class="up-item">
-                                <div class="shopping-card">
-                                    <i class="flaticon-bag"></i>
-                                    <span>0</span>
-                                </div>
-                                <a asp-action="CartDetails" asp-controller="Carts">Shopping Cart</a>
-                            </div>
+                            @{ var name = Context.User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+                                if (name != null)
+                                {
+                                    <div class="up-item">
+                                        <i class="flaticon-profile"></i>
+                                        <span>@name</span>
+                                    </div>
+                                    <div class="up-item">
+                                        <div class="shopping-card">
+                                            <i class="flaticon-bag"></i>
+                                            <span>0</span>
+                                        </div>
+                                        <a asp-action="CartDetails" asp-controller="Carts">Shopping Cart</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="up-item">
+                                        <i class="flaticon-profile"></i>
+                                        <a asp-action="Login" asp-controller="Accounts">Sign In</a><span> or </span><a asp-action="Register" asp-controller="Accounts">Create Account</a>
+                                    </div>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -125,35 +137,23 @@
             <div class="container">
                 <!-- menu -->
                 <ul class="main-menu">
-                    <li><a asp-action="Index">Home</a></li>
+                    <li><a asp-action="Index" asp-controller="Home">Home</a></li>
                     <li>
-                        <a href="#">Categories</a>
-                        <ul class="sub-menu">
-                            @foreach(var category in ViewBag.Categories)
-                            {
-                            <li>
-                                <a asp-action="CategoryDetails" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
-                            </li>
-                            }
+                        <a asp-action="CategoryDetails" asp-controller="Categories">Store</a>
+                        <!--<ul class="sub-menu">-->
                             @*<li><a href="#">Outdoors and Camping</a></li>
-        <li><a href="#">Gadgets</a></li>
-        <li><a href="#">Baby Essentials</a></li>
-        <li><a href="#">Convenience</a></li>
-        <li><a href="#">Sports Accessories</a></li>*@
-                        </ul>
+                            <li><a href="#">Gadgets</a></li>
+                            <li><a href="#">Baby Essentials</a></li>
+                            <li><a href="#">Convenience</a></li>
+                            <li><a href="#">Sports Accessories</a></li>*@
+                        <!--</ul>-->
                     </li>
                     <li><a href="#">About us</a></li>
-                    @*<li>
-            <a href="#">
-                Jewelry
-                <span class="new">New</span>
-            </a>
-        </li>*@
                     <li>
-                        <a href="#">Contact us</a>
+                        <a asp-action="Contact" asp-controller="Contacts">Contact us</a>
                        
                     </li>
-                    @*<li>
+                    <li>
                         <a href="#">Pages</a>
                         <ul class="sub-menu">
                             <li><a asp-action="ProductDetails" asp-controller="Products">Product Page</a></li>
@@ -161,9 +161,9 @@
                             <li><a asp-action="CartDetails" asp-controller="Carts">Cart Page</a></li>
                             <li><a href="./checkout.html">Checkout Page</a></li>
                             <li><a asp-action="Contact" asp-controller="Contacts">Contact Page</a></li>
+                            <li><a asp-action="LogOut" asp-controller="Accounts">Log Out</a></li>
                         </ul>
-                    </li>*@
-                 
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -200,7 +200,7 @@
                         <ul>
                             <li><a href="">Partners</a></li>
                             <li><a href="">Bloggers</a></li>
-                            <li><a asp-action="Contact">Support</a></li>
+                            <li><a asp-action="Contact" asp-controller="Contacts">Support</a></li>
                             <li><a href="">Terms of Use</a></li>
                             <li><a href="">Press</a></li>
                         </ul>
