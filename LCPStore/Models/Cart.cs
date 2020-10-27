@@ -18,7 +18,7 @@ namespace LCPStore.Models
         public Account Account { get; set; }
         [ForeignKey("Order")]
         [AllowNull]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public Order Order { get; set; }
     }
 }

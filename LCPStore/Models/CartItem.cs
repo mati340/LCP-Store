@@ -14,5 +14,7 @@ namespace LCPStore.Models
         public int Quantity { get; set; }
         public double TotalPrice { get; set; }
         public Product Product { get; set; }
+        //public Account Account { get; set; }
+
     }
 }

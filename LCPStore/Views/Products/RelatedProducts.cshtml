@@ -1,0 +1,22 @@
+﻿@model IEnumerable<LCPStore.Models.Product>
+
+
+
+@foreach (var product in Model)
+{
+    @*<a asp-action="RelatedProducts" asp-controller="Products" asp-route-id="@product.Category">*@
+        <div class="product-item">
+            <div class="pi-pic">
+                <img src="~/img/product/1.jpg" alt="">
+                <div class="pi-links">
+                    <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                    <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                </div>
+            </div>
+            <div class="pi-text">
+                <h6>$@product.Price,00</h6>
+                <p>@product.Name </p>
+            </div>
+        </div>
+    @*</a>*@
+}
