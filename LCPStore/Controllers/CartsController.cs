@@ -27,7 +27,10 @@ namespace LCPStore.Controllers
             {
                 query.Quantity += 1;
                 query.TotalPrice = query.Product.Price * query.Quantity;
+                
             }
+            _context.Update(query);
+            UpdateSumToPay(query.TotalPrice);
             await _context.SaveChangesAsync();
             Object obj = 5;
             return RedirectToAction(nameof(CartDetails));
@@ -40,9 +43,19 @@ namespace LCPStore.Controllers
             {
                 query.Quantity -= 1;
                 query.TotalPrice = query.Product.Price * query.Quantity;
+                UpdateSumToPay(query.TotalPrice);
             }
+            _context.Update(query);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(CartDetails));
+        }
+
+        public async void UpdateSumToPay(double price)
+        {
+            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            var cart = await _context.Cart.Where(s => (s.Account.Name == user) && (s.Order == null)).FirstOrDefaultAsync<Cart>();
+            cart.SumToPay += price;
+            _context.Update(cart);
         }
 
         // GET: Carts/Details/1
@@ -68,10 +81,7 @@ namespace LCPStore.Controllers
             {
                 return NotFound();
             }
-            foreach (var cartItem in cart.CartItems)
-            {
-                cart.SumToPay += cartItem.TotalPrice;
-            }
+
             return View(cart);
         }
 
@@ -112,12 +122,11 @@ namespace LCPStore.Controllers
                 return RedirectToAction("Login", "Accounts");
             }
 
-            var query = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault<Cart>();
+            var query = _context.Cart.Where(s => (s.Account.Name == user) && (s.Order == null)).FirstOrDefault<Cart>();
             if (query == null)
             {
                 Account account = _context.Account.First(s => s.Name == user);
-                Order order = new Order { Account =  account };
-                Cart cart = new Cart { Account = account, AccountId = account.Id, Order = order};
+                Cart cart = new Cart { Account = account, AccountId = account.Id , SumToPay=0};
                 _context.Cart.Add(cart);
                 await _context.SaveChangesAsync();
                 query = cart;
@@ -134,7 +143,12 @@ namespace LCPStore.Controllers
                 cartItem.Cart = query;
                 if (ModelState.IsValid)
                 {
+                    
+
                     _context.Add(cartItem);
+                     UpdateSumToPay(cartItem.TotalPrice);
+                    //query.SumToPay += cartItem.TotalPrice;
+                    //_context.Update(query);
                     await _context.SaveChangesAsync();
                 }
             }
@@ -144,7 +158,11 @@ namespace LCPStore.Controllers
                 {
                     await Plus(c.Id);
                 }
+                //query.SumToPay += c.TotalPrice;
+                //_context.Update(query);
+                await _context.SaveChangesAsync();
             }    
+
             ViewBag.CartCount = query.CartItems.Count();
             return RedirectToAction("ProductDetails","Products", new { id = Int32.Parse(productId) });
         }
