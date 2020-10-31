@@ -4,14 +4,16 @@ using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    partial class LCPStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201030134807_order")]
+    partial class order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,6 +64,9 @@ namespace LCPStore.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<double>("SumToPay")
                         .HasColumnType("float");
 
@@ -69,6 +74,10 @@ namespace LCPStore.Migrations
 
                     b.HasIndex("AccountId")
                         .IsUnique();
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Cart");
                 });
@@ -153,9 +162,6 @@ namespace LCPStore.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -180,10 +186,6 @@ namespace LCPStore.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("CartId")
-                        .IsUnique()
-                        .HasFilter("[CartId] IS NOT NULL");
 
                     b.ToTable("Order");
                 });
@@ -227,6 +229,10 @@ namespace LCPStore.Migrations
                         .HasForeignKey("LCPStore.Models.Cart", "AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LCPStore.Models.Order", "Order")
+                        .WithOne("Cart")
+                        .HasForeignKey("LCPStore.Models.Cart", "OrderId");
                 });
 
             modelBuilder.Entity("LCPStore.Models.CartItem", b =>
@@ -245,10 +251,6 @@ namespace LCPStore.Migrations
                     b.HasOne("LCPStore.Models.Account", "Account")
                         .WithMany("Orders")
                         .HasForeignKey("AccountId");
-
-                    b.HasOne("LCPStore.Models.Cart", "Cart")
-                        .WithOne("Order")
-                        .HasForeignKey("LCPStore.Models.Order", "CartId");
                 });
 
             modelBuilder.Entity("LCPStore.Models.Product", b =>

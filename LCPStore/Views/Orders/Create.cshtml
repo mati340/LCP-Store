@@ -1,0 +1,197 @@
+﻿@model LCPStore.Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{ LCPStore.Models.Cart cart = (Cart)ViewData["cart_to_view"]; }
+
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>Your cart</h4>
+        <div class="site-pagination">
+            <a href="">Home</a> /
+            <a href="">Your cart</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+                <form asp-action="Create" class="checkout-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="cf-title">Billing Address</div>
+                    <div class="row address-inputs">
+                        <div class="col-md-12">
+
+                            <input asp-for="Address" type="text" class="form-control" placeholder="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+
+                            <input asp-for="City" type="text" class="form-control" placeholder="City">
+                            <span asp-validation-for="City" class="text-danger"></span>
+
+                            <input asp-for="Country" type="text" class="form-control" placeholder="Country">
+                            <span asp-validation-for="Country" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="ZipCode" type="text" class="form-control" placeholder="ZipCode">
+                            <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="PhoneNumber">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="cf-title">Delievery Info</div>
+                    <div class="row shipping-btns">
+                        <div class="col-6">
+                            <h4>Standard</h4>
+                        </div>
+                        @{ var delivery = Html.GetEnumSelectList<Delivery>().ToArray(); } 
+                        <div class="col-6">
+                            <div class="cf-radio-btns">
+                                <div class="cfr-item">
+                                    <input asp-for="Delivery" class="form-control" type="radio" name="shipping" id="ship-1" value="@delivery[0].Value">
+                                    <label for="ship-1">Free</label>
+                                    <span asp-validation-for="Delivery" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h4>Next day delievery  </h4>
+                        </div>
+                        <div class="col-6">
+                            <div class="cf-radio-btns">
+                                <div class="cfr-item">
+                                    <input asp-for="Delivery" class="form-control" type="radio" name="shipping" id="ship-2" value="@delivery[1].Value">
+                                    <label for="ship-2">$3.45</label>
+                                    <span asp-validation-for="Delivery" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cf-title">Payment</div>
+                    <ul class="payment-list">
+                        <li>Paypal<a href="#"><img src="~/img/paypal.png" alt=""></a></li>
+                        <li>Credit / Debit card<a href="#"><img src="~/img/mastercart.png" alt=""></a></li>
+                        <li>Pay when you get the package</li>
+                    </ul>
+                    <button class="site-btn submit-order-btn">Place Order</button>
+                </form>
+            </div>
+            <div class="col-lg-4 order-1 order-lg-2">
+                <div class="checkout-cart">
+                    <h3>Your Cart</h3>
+                    @*@Html.PartialAsync("CartPartialView");*@
+                <ul class="product-list">
+
+                    @foreach (var item in cart.CartItems)
+                    {
+                    <li>
+                        <div class="pl-thumb">
+                            @if (item.Product.Image != null)
+                            {
+                                string img = Convert.ToBase64String(item.Product.Image);
+                                <img src="data:image/png;base64,@img" alt="No picture">
+                            }
+                            else
+                            {
+                                <img src="~/img/cart/1.jpg" alt="No picture">
+                            }
+                        </div>
+                        <h6>@item.Product.Name</h6>
+                        <p>$@item.Product.Price,00</p>
+                    </li>
+                    }
+                     
+                    </ul>
+                        <ul class="price-list">
+                            <li>Total<span>$@cart.SumToPay,00</span></li>
+                            <li>Shipping<span>free</span></li>
+                            <li class="total">Total<span>@cart.SumToPay</span></li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- checkout section end -->
+<!-- The Real view -->
+@*<h1>Create</h1>
+
+    <h4>Order</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Country" class="control-label"></label>
+                    <input asp-for="Country" class="form-control" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ZipCode" class="control-label"></label>
+                    <input asp-for="ZipCode" class="form-control" />
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalPay" class="control-label"></label>
+                    <input asp-for="TotalPay" class="form-control" />
+                    <span asp-validation-for="TotalPay" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Delivery" class="control-label"></label>
+                    <select asp-for="Delivery" class="form-control"></select>
+                    <span asp-validation-for="Delivery" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OrderTime" class="control-label"></label>
+                    <input asp-for="OrderTime" class="form-control" />
+                    <span asp-validation-for="OrderTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<!--====== Javascripts & Jquery ======-->
+<script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/jquery.slicknav.min.js"></script>
+<script src="~/js/owl.carousel.min.js"></script>
+<script src="~/js/jquery.nicescroll.min.js"></script>
+<script src="~/js/jquery.zoom.min.js"></script>
+<script src="~/js/jquery-ui.min.js"></script>
+<script src="~/js/main.js"></script>

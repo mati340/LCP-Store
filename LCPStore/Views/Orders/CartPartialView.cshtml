@@ -1,0 +1,28 @@
+﻿@model LCPStore.Models.Cart
+
+
+<ul class="product-list">
+    <li>
+        @foreach (var item in Model.CartItems)
+        {
+            <div class="pl-thumb">
+                @if (item.Product.Image != null)
+                {
+                    string img = Convert.ToBase64String(item.Product.Image);
+                    <img src="data:image/png;base64,@img" alt="No picture">
+                }
+                else
+                {
+                    <img src="~/img/cart/1.jpg" alt="No picture">
+                }
+            </div>
+            <h6>@item.Product.Name</h6>
+            <p>$@item.Product.Price,00</p>
+        }
+    </li>
+</ul>
+<ul class="price-list">
+    <li>Total<span>$@Model.SumToPay,00</span></li>
+    <li>Shipping<span>free</span></li>
+    <li class="total">Total<span>@Model.SumToPay</span></li>
+</ul>
