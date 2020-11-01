@@ -25,9 +25,7 @@ namespace LCPStore.Models
         public double TotalPay { get; set; }
         public Delivery Delivery { get; set; }
         public Account Account { get; set; }
-        [ForeignKey("Cart")]
-        public int? CartId { get; set; }
-        public Cart Cart { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; set; }

@@ -27,12 +27,9 @@ namespace LCPStore.Controllers
             {
                 query.Quantity += 1;
                 query.TotalPrice = query.Product.Price * query.Quantity;
-                
+                await _context.SaveChangesAsync();
+                await UpdateSumToPay(query.Product.Price);
             }
-            _context.Update(query);
-            UpdateSumToPay(query.TotalPrice);
-            await _context.SaveChangesAsync();
-            Object obj = 5;
             return RedirectToAction(nameof(CartDetails));
         }
         
@@ -43,19 +40,19 @@ namespace LCPStore.Controllers
             {
                 query.Quantity -= 1;
                 query.TotalPrice = query.Product.Price * query.Quantity;
-                UpdateSumToPay(query.TotalPrice);
+                await _context.SaveChangesAsync();
+                await UpdateSumToPay(-query.Product.Price);
             }
-            _context.Update(query);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(CartDetails));
         }
 
-        public async void UpdateSumToPay(double price)
+        public async Task UpdateSumToPay(double price)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
-            var cart = await _context.Cart.Where(s => (s.Account.Name == user) && (s.Order == null)).FirstOrDefaultAsync<Cart>();
+            var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Name == user);
+            //if cart==null  TODO
             cart.SumToPay += price;
-            _context.Update(cart);
+            await _context.SaveChangesAsync();
         }
 
         // GET: Carts/Details/1
@@ -69,7 +66,12 @@ namespace LCPStore.Controllers
                     return RedirectToAction("Login", "Accounts");
                 }
 
-                id = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault().Id;
+                var c = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault();
+                if (c == null)
+                    return NotFound();
+                id = c.Id;
+
+                  
             }
 
             var cart = await _context.Cart
@@ -122,7 +124,7 @@ namespace LCPStore.Controllers
                 return RedirectToAction("Login", "Accounts");
             }
 
-            var query = _context.Cart.Where(s => (s.Account.Name == user) && (s.Order == null)).FirstOrDefault<Cart>();
+            var query = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault<Cart>();
             if (query == null)
             {
                 Account account = _context.Account.First(s => s.Name == user);
@@ -143,13 +145,9 @@ namespace LCPStore.Controllers
                 cartItem.Cart = query;
                 if (ModelState.IsValid)
                 {
-                    
-
                     _context.Add(cartItem);
-                     UpdateSumToPay(cartItem.TotalPrice);
-                    //query.SumToPay += cartItem.TotalPrice;
-                    //_context.Update(query);
                     await _context.SaveChangesAsync();
+                    await UpdateSumToPay(cartItem.TotalPrice);
                 }
             }
             else
@@ -158,12 +156,8 @@ namespace LCPStore.Controllers
                 {
                     await Plus(c.Id);
                 }
-                //query.SumToPay += c.TotalPrice;
-                //_context.Update(query);
-                await _context.SaveChangesAsync();
             }    
 
-            ViewBag.CartCount = query.CartItems.Count();
             return RedirectToAction("ProductDetails","Products", new { id = Int32.Parse(productId) });
         }
 
@@ -278,5 +272,18 @@ namespace LCPStore.Controllers
         {
             return _context.Cart.Any(e => e.Id == id);
         }
+        //public ActionResult CountItems()
+        //{
+        //    var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+        //    if (user == null)
+        //    {
+        //        //return RedirectToAction("Login", "Accounts");
+        //    }
+
+        //    var query = _context.Cart.Include(c=>c.CartItems).FirstOrDefault(s => s.Account.Name == user);
+
+        //    var model = query.CartItems.ToList().Count();
+        //    return PartialView("~/Views/Shared/_Layout.cshtml", model.ToString());
+        //}
     }
 }

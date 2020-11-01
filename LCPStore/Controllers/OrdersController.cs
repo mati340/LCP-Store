@@ -70,14 +70,39 @@ namespace LCPStore.Controllers
         public async Task<IActionResult> Create([Bind("Id,Country,City,Address,ZipCode,PhoneNumber,TotalPay,Delivery,OrderTime")] Order order)
         {
 
+            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Accounts");
+            }
+
+            Cart cart = await _context.Cart.Where(s => s.Account.Name == user)
+                .Include(c=>c.CartItems).ThenInclude(p=>p.Product)
+                .Include(a=>a.Account)
+                .FirstOrDefaultAsync<Cart>();
 
             if (ModelState.IsValid)
             {
                 order.OrderTime = DateTime.Now;
+                order.Account = cart.Account;
+                order.OrderItems = new List<OrderItem>();
+                order.TotalPay = cart.SumToPay;
+                foreach (var item in cart.CartItems)
+                {
+                    order.OrderItems.Add(new OrderItem() {Order=order ,Product=item.Product, Quantity=item.Quantity, TotalPrice=item.TotalPrice });
+                }
                 _context.Add(order);
+                cart.Order = order;
+                _context.CartItem.RemoveRange(_context.CartItem.Where(c=>c.Cart == cart));
+                cart.SumToPay = 0;
+                cart.Order = null;
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                String orderID = order.Id.ToString();
+                ViewData["Message"] = orderID;
+                return View("Ordered");
             }
+
             return View(order);
         }
 
