@@ -4,14 +4,16 @@ using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    partial class LCPStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201101090151_add_orderItem_model")]
+    partial class add_orderItem_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

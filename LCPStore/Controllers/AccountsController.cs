@@ -50,6 +50,7 @@ namespace LCPStore.Controllers
             }
             if (ModelState.IsValid)
             {
+                account.Cart = new Cart();
                 account.Registered = DateTime.Now;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
