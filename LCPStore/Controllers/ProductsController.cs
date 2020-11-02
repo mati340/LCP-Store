@@ -49,6 +49,25 @@ namespace LCPStore.Controllers
 
             return Json(await query.ToListAsync());
         }
+        
+        public async Task<IActionResult> RelatedProducts(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var q = (from c in _context.Category
+            //         where c.Id == id
+            //         orderby a.Created descending
+            //         select new ICollection<Product> { }).Take(5);
+            Category category = await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
+            var products = category.Products.Take(5);
+            //ICollection<Product> relproduct = await q.ToListAsync();
+
+            return View(products);
+        }
+        
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);

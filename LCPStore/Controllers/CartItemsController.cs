@@ -44,31 +44,10 @@ namespace LCPStore.Controllers
         }
 
         // GET: CartItems/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: CartItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart(int quantity, string productId)
-        {
-            CartItem cartItem = new CartItem();
-            cartItem.Quantity = quantity;
-            var product = await _context.Product.FirstOrDefaultAsync(s => s.Id.ToString() == productId);
-            cartItem.Product = product;
-            cartItem.TotalPrice = product.Price * cartItem.Quantity;
-            if (ModelState.IsValid)
-            {
-                _context.Add(cartItem);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cartItem);
-        }
 
         // GET: CartItems/Edit/5
         public async Task<IActionResult> Edit(int? id)

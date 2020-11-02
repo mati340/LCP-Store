@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace LCPStore.Models
         public double TotalPay { get; set; }
         public Delivery Delivery { get; set; }
         public Account Account { get; set; }
-        public Cart Cart { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime OrderTime { get; set; }

@@ -50,6 +50,7 @@ namespace LCPStore.Controllers
             }
             if (ModelState.IsValid)
             {
+                account.Cart = new Cart();
                 account.Registered = DateTime.Now;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
@@ -87,6 +88,7 @@ namespace LCPStore.Controllers
         {
             var claims = new List<Claim>
             {
+
                 new Claim(ClaimTypes.Email, user.Username),
                 new Claim("Name", user.Name),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),

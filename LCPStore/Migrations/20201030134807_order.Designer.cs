@@ -4,14 +4,16 @@ using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LCPStore.Migrations
 {
     [DbContext(typeof(LCPStoreContext))]
-    partial class LCPStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201030134807_order")]
+    partial class order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +75,9 @@ namespace LCPStore.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Cart");
                 });
@@ -186,34 +190,6 @@ namespace LCPStore.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("LCPStore.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItem");
-                });
-
             modelBuilder.Entity("LCPStore.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -255,8 +231,8 @@ namespace LCPStore.Migrations
                         .IsRequired();
 
                     b.HasOne("LCPStore.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                        .WithOne("Cart")
+                        .HasForeignKey("LCPStore.Models.Cart", "OrderId");
                 });
 
             modelBuilder.Entity("LCPStore.Models.CartItem", b =>
@@ -275,17 +251,6 @@ namespace LCPStore.Migrations
                     b.HasOne("LCPStore.Models.Account", "Account")
                         .WithMany("Orders")
                         .HasForeignKey("AccountId");
-                });
-
-            modelBuilder.Entity("LCPStore.Models.OrderItem", b =>
-                {
-                    b.HasOne("LCPStore.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("LCPStore.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("LCPStore.Models.Product", b =>

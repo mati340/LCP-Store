@@ -1,0 +1,35 @@
+﻿@{ var data = ViewData["Message"]; }
+<section>
+    <div class="jumbotron text-center">
+        <h1 class="display-3">Thanks for your order!</h1>
+
+        <p class="lead"><strong>your order has been received.</strong> </p><br>
+
+        <h5>
+
+            Order No: @data
+
+        </h5>
+
+        <hr>
+        <p>
+            Having trouble? <a asp-area="" asp-controller="Contacts" asp-action="Contact">Contact us</a>
+
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-sm" asp-area="" asp-controller="Home" asp-action="Index" role="button">Continue to homepage</a><br><br>
+        </p>
+
+
+
+        <p class="lead">
+            <strong>
+                Thanks,<br>
+                LCP Store
+            </strong>
+        </p>
+
+
+
+    </div>
+</section>
