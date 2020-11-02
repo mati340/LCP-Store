@@ -1,0 +1,35 @@
+﻿@model LCPStore.Models.AdminPanel
+
+@{
+    Layout = "_Layout_AdminPanel";
+    ViewData["Title"] = "Admin Panel";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            
+            @{
+                ViewBag.Show = "false";
+                if (Model.Accounts.Count() > 0)
+                    @await Html.PartialAsync("../AdminPanels/Accounts/Index.cshtml", Model.Accounts);
+                if (Model.Categories.Count() > 0)
+                    @await Html.PartialAsync("../AdminPanels/Categories/Index.cshtml", Model.Categories);
+                if (Model.Products.Count() > 0)
+                    @await Html.PartialAsync("../AdminPanels/Products/Index.cshtml", Model.Products);
+                if (Model.Contacts.Count() > 0)
+                    @await Html.PartialAsync("../AdminPanels/Contacts/Index.cshtml", Model.Contacts);
+            }
+
+            @*<div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT-->
