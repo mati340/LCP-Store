@@ -12,5 +12,8 @@ namespace LCPStore.Models
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Cart> Carts { get; set; }
+        public IEnumerable<CartItem> CartItems { get; set; }
+        //public IEnumerable<OrderItem> OrderItems { get; set; }
     }
 }

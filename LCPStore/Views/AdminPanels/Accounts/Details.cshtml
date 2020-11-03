@@ -53,6 +53,41 @@
                     <dd class="col-sm-10">
                         @Html.DisplayFor(model => model.Role)
                     </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Orders)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <table class="table">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Total Pay</th>
+                            </tr>
+                            @foreach (var item in Model.Orders)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalPay)
+                                    </td>
+                                    <td>
+                                        <div class="table-data-feature">
+                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" onclick="location.href='@Url.Action("OrderEdit", "AdminPanels", new { item.Id })'">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="location.href='@Url.Action("OrderDelete", "AdminPanels", new { item.Id })'">
+                                                <i class="zmdi zmdi-delete"></i>
+                                            </button>
+                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Details" onclick="location.href='@Url.Action("OrderDetails", "AdminPanels", new { item.Id })'">
+                                                <i class="zmdi zmdi-more"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
                 </dl>
             <div>
                 <a asp-action="AccountEdit" asp-route-id="@Model.Id">Edit</a> |

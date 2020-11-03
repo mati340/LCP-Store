@@ -1,0 +1,53 @@
+﻿@model IEnumerable<LCPStore.Models.Cart>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Carts table</h3>
+        @{ if (ViewBag.Show == "true") {
+                <div class="table-data__tool">
+                    <div class="table-data__tool-right">
+                        <button class="au-btn au-btn-icon au-btn--green au-btn--small" onclick="location.href='@Url.Action("CartCreate", "AdminPanels")'">
+                            <i class="zmdi zmdi-plus"></i>add cart
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.AccountId)</th>
+                        <th>@Html.DisplayNameFor(model => model.Account.Name)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tr-shadow">
+                            <td>@Html.DisplayFor(modelItem => item.AccountId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Account.Name)</td>
+                            <td>
+                                <div class="table-data-feature">
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" onclick="location.href='@Url.Action("CartEdit", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="location.href='@Url.Action("CartDelete", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Details" onclick="location.href='@Url.Action("CartDetails", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

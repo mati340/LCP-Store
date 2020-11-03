@@ -1,0 +1,76 @@
+﻿@model LCPStore.Models.Order
+
+@{
+    Layout = "_Layout_AdminPanel";
+    ViewData["Title"] = "Edit";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 user-data p-b-30">
+                    <h1 class="title-5 m-b-35">Order Edit</h1>
+                    <form asp-action="OrderEdit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Country" class="control-label"></label>
+                            <input asp-for="Country" class="form-control" />
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label"></label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ZipCode" class="control-label"></label>
+                            <input asp-for="ZipCode" class="form-control" />
+                            <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber" class="control-label"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TotalPay" class="control-label"></label>
+                            <input asp-for="TotalPay" class="form-control" />
+                            <span asp-validation-for="TotalPay" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Delivery" class="control-label"></label>
+                            <select asp-for="Delivery" class="form-control">
+                                <option style="display:none">---Select---</option>
+                                <option value="0">Standart</option>
+                                <option value="1">Premium</option>
+                            </select>                            <span asp-validation-for="Delivery" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="OrderTime" class="control-label"></label>
+                            <input asp-for="OrderTime" class="form-control" />
+                            <span asp-validation-for="OrderTime" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    <div>
+                        <a asp-action="Tables">Back to List</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

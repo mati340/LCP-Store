@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LCPStore.Models.Order>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Orders table</h3>
+        @{ if (ViewBag.Show == "true")
+            {
+                <div class="table-data__tool">
+                    <div class="table-data__tool-right">
+                        <button class="au-btn au-btn-icon au-btn--green au-btn--small" onclick="location.href='@Url.Action("OrderCreate", "AdminPanels")'">
+                            <i class="zmdi zmdi-plus"></i>add Order
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Country)</th>
+                        <th>@Html.DisplayNameFor(model => model.City)</th>
+                        <th>@Html.DisplayNameFor(model => model.Address)</th>
+                        <th>@Html.DisplayNameFor(model => model.ZipCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+                        <th>@Html.DisplayNameFor(model => model.TotalPay)</th>
+                        <th>@Html.DisplayNameFor(model => model.Delivery)</th>
+                        <th>@Html.DisplayNameFor(model => model.OrderTime)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tr-shadow">
+                            <td>@Html.DisplayNameFor(modelItem => item.Country)</td>
+                            <td>
+                                <span class="block-email">@Html.DisplayFor(modelItem => item.City)</span>
+                            </td>
+                            <td class="desc">@Html.DisplayFor(modelItem => item.Address)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ZipCode)</td>
+                            <td>
+                                <span class="status--process">@Html.DisplayFor(modelItem => item.PhoneNumber)</span>
+                            </td>                            
+                            <td>
+                                <span class="status--process">$@Html.DisplayFor(modelItem => item.TotalPay),00</span>
+                            </td>                            
+                            <td>
+                                <span class="status--process">@Html.DisplayFor(modelItem => item.Delivery)</span>
+                            </td>                            
+                            <td>
+                                <span class="status--process">@Html.DisplayFor(modelItem => item.OrderTime)</span>
+                            </td>
+                            <td>
+                                <div class="table-data-feature">
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" onclick="location.href='@Url.Action("OrderEdit", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="location.href='@Url.Action("OrderDelete", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Details" onclick="location.href='@Url.Action("OrderDetails", "AdminPanels", new { item.Id })'">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>
