@@ -29,6 +29,11 @@ namespace LCPStore.Controllers
 
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

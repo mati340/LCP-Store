@@ -30,6 +30,8 @@
   <ItemGroup>
     <Folder Include="Views\AdminPanels\Categories\" />
     <Folder Include="wwwroot\AdminPanel\" />
+    <Folder Include="wwwroot\img\NewFolder1\" />
+    <Folder Include="wwwroot\img\NewFolder\" />
   </ItemGroup>
 
 
