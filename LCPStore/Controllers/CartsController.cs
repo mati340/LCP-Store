@@ -94,25 +94,6 @@ namespace LCPStore.Controllers
             return View(await lCPStoreContext.ToListAsync());
         }
 
-        // GET: Carts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cart = await _context.Cart
-                .Include(c => c.Account)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            return View(cart);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         //Add To Cart
@@ -159,113 +140,6 @@ namespace LCPStore.Controllers
             }    
 
             return RedirectToAction("ProductDetails","Products", new { id = Int32.Parse(productId) });
-        }
-
-        // GET: Carts/Create
-        public IActionResult Create()
-        {
-            ViewData["AccountId"] = new SelectList(_context.Account, "Id", "Id");
-            return View();
-        }
-
-        // POST: Carts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccountId")] Cart cart)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(cart);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AccountId"] = new SelectList(_context.Account, "Id", "Id", cart.AccountId);
-            return View(cart);
-        }
-
-        // GET: Carts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cart = await _context.Cart.FindAsync(id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-            ViewData["AccountId"] = new SelectList(_context.Account, "Id", "Id", cart.AccountId);
-            return View(cart);
-        }
-
-        // POST: Carts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountId")] Cart cart)
-        {
-            if (id != cart.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(cart);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CartExists(cart.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AccountId"] = new SelectList(_context.Account, "Id", "Id", cart.AccountId);
-            return View(cart);
-        }
-
-        // GET: Carts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cart = await _context.Cart
-                .Include(c => c.Account)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            return View(cart);
-        }
-
-        // POST: Carts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var cart = await _context.Cart.FindAsync(id);
-            _context.Cart.Remove(cart);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool CartExists(int id)
