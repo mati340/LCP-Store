@@ -9,6 +9,7 @@ using LCPStore.Data;
 using LCPStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading;
+using System.Security.Claims;
 
 namespace LCPStore.Controllers
 {
@@ -48,7 +49,7 @@ namespace LCPStore.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (user == null)
             {
                 return RedirectToAction("Login", "Accounts");

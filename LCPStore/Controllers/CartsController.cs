@@ -142,6 +142,11 @@ namespace LCPStore.Controllers
             return RedirectToAction("ProductDetails","Products", new { id = Int32.Parse(productId) });
         }
 
+        public async Task AddProduct(String id)
+        {
+            this.AddToCart(id,1);
+        }
+
         private bool CartExists(int id)
         {
             return _context.Cart.Any(e => e.Id == id);

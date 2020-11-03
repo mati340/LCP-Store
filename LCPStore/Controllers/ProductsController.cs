@@ -30,12 +30,15 @@ namespace LCPStore.Controllers
             }
 
             var product = await _context.Product
-                .Include(c => c.Category)
+                .Include(c => c.Category).ThenInclude(p=>p.Products)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
+
+            var products = product.Category.Products.Take(5).ToList();
+            ViewData["RelatedProducts"] = products;
 
             return View(product);
         }
@@ -62,9 +65,10 @@ namespace LCPStore.Controllers
             //         orderby a.Created descending
             //         select new ICollection<Product> { }).Take(5);
             Category category = await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
-            var products = category.Products.Take(5);
+            var products = category.Products.Take(5).ToList();
             //ICollection<Product> relproduct = await q.ToListAsync();
 
+            ViewData["RelatedProducts"] = products; 
             return View(products);
         }
         
