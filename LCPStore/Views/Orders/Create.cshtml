@@ -57,7 +57,7 @@
                         <div class="col-6">
                             <div class="cf-radio-btns">
                                 <div class="cfr-item">
-                                    <input asp-for="Delivery" class="form-control" type="radio" name="shipping" id="ship-1" value="@delivery[0].Value">
+                                    <input asp-for="Delivery" class="form-control" type="radio" name="Delivery" id="ship-1" value="@delivery[0].Value">
                                     <label for="ship-1">Free</label>
                                     <span asp-validation-for="Delivery" class="text-danger"></span>
                                 </div>
@@ -69,10 +69,11 @@
                         <div class="col-6">
                             <div class="cf-radio-btns">
                                 <div class="cfr-item">
-                                    <input asp-for="Delivery" class="form-control" type="radio" name="shipping" id="ship-2" value="@delivery[1].Value">
+                                    <input asp-for="Delivery" class="form-control" type="radio" name="Delivery" id="ship-2" value="@delivery[1].Value">
                                     <label for="ship-2">$3.45</label>
                                     <span asp-validation-for="Delivery" class="text-danger"></span>
                                 </div>
+                                <div id="log"></div>
                             </div>
                         </div>
                     </div>
@@ -187,6 +188,7 @@
 
 <!--====== Javascripts & Jquery ======-->
 <script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/Order/Delivery.js"></script>
 <script src="~/js/bootstrap.min.js"></script>
 <script src="~/js/jquery.slicknav.min.js"></script>
 <script src="~/js/owl.carousel.min.js"></script>

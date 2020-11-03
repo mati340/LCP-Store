@@ -97,7 +97,7 @@ namespace LCPStore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //Add To Cart
-        public async Task<IActionResult> AddToCart(string productId, int quantity=1)
+        public async Task<IActionResult> AddToCart(int productId, int quantity=1)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
             if (user == null)
@@ -115,12 +115,12 @@ namespace LCPStore.Controllers
                 query = cart;
             }
 
-            var c = _context.CartItem.Where(s => s.Cart == query).Where(p => p.Product.Id.ToString() == productId).FirstOrDefault<CartItem>();
+            var c = _context.CartItem.Where(s => s.Cart == query).Where(p => p.Product.Id == productId).FirstOrDefault<CartItem>();
             if (c == null)
             {
                 CartItem cartItem = new CartItem();
                 cartItem.Quantity = quantity;
-                var product = await _context.Product.FirstOrDefaultAsync(s => s.Id.ToString() == productId);
+                var product = await _context.Product.FirstOrDefaultAsync(s => s.Id == productId);
                 cartItem.Product = product;
                 cartItem.TotalPrice = product.Price * cartItem.Quantity;
                 cartItem.Cart = query;
@@ -139,10 +139,10 @@ namespace LCPStore.Controllers
                 }
             }    
 
-            return RedirectToAction("ProductDetails","Products", new { id = Int32.Parse(productId) });
+            return RedirectToAction("ProductDetails","Products", new { id = (productId) });
         }
 
-        public async Task AddProduct(String id)
+        public async Task AddProduct(int id)
         {
             this.AddToCart(id,1);
         }

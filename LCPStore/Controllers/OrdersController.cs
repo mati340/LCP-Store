@@ -49,7 +49,7 @@ namespace LCPStore.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
             if (user == null)
             {
                 return RedirectToAction("Login", "Accounts");
