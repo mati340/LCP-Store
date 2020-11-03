@@ -112,7 +112,7 @@
                         <div class="pi-pic">
                             @if (product.Image != null)
                             {
-                                String img = Convert.ToBase64String(Model.Image);
+                                String img = Convert.ToBase64String(product.Image);
                                 <img src="data:image/png;base64,@img"/>
                             }
                             else
