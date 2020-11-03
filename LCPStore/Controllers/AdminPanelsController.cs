@@ -116,11 +116,16 @@ namespace LCPStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AccountCreate([Bind("Id,Username,Password,Gender,Name,BirthDate,Registered,Role")] Account account)
         {
-            if (ModelState.IsValid)
+            if (!_context.Account.Any(u => u.Username == account.Username))
             {
-                _context.Add(account);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Tables));
+                if (ModelState.IsValid)
+                {
+                    account.Registered = DateTime.Now;
+                    account.Cart = new Cart();
+                    _context.Add(account);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Tables));
+                }
             }
             return View("~/Views/AdminPanels/Accounts/Create.cshtml", account);
         }
