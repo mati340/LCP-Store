@@ -125,6 +125,10 @@ ol {
 
 /* buttons */
 
+#filter-btn{
+	margin-top: 50px;
+}
+
 .site-btn {
 	display: inline-block;
 	border: none;

@@ -32,5 +32,6 @@ namespace LCPStore.Data
         public DbSet<LCPStore.Models.CartItem> CartItem { get; set; }
 
         public DbSet<LCPStore.Models.Order> Order { get; set; }
+        public DbSet<LCPStore.Models.OrderItem> OrderItem { get; set; }
     }
 }

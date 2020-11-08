@@ -54,8 +54,8 @@
 <head>
     <title>Life Changing Products - @ViewData["Title"]</title>
     <meta charset="UTF-8">
-    <meta name="description" content=" Divisima | eCommerce Template">
-    <meta name="keywords" content="divisima, eCommerce, creative, html">
+    <meta name="description" content=" LCP | eCommerce">
+    <meta name="keywords" content="LCP, eCommerce, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link href="~/img/favicon.ico" rel="shortcut icon" />
@@ -99,8 +99,8 @@
                         </a>
                     </div>
                     <div class="col-xl-6 col-lg-5">
-                        <form class="header-search-form">
-                            <input id="searchBox" type="text" placeholder="Search for product ....">
+                        <form asp-action="SearchProducts" asp-controller="Products" class="header-search-form">
+                            <input name="term" id="searchBox" type="text" placeholder="Search for product ....">
                             <button><i class="flaticon-search"></i></button>
                         </form>
                     </div>
@@ -140,7 +140,7 @@
                 <ul class="main-menu">
                     <li><a asp-action="Index" asp-controller="Home">Home</a></li>
                     <li>
-                        <a asp-action="CategoryDetails" asp-controller="Categories">Store</a>
+                        <a asp-action="Store" asp-controller="Categories">Store</a>
                         <!--<ul class="sub-menu">-->
                             @*<li><a href="#">Outdoors and Camping</a></li>
                             <li><a href="#">Gadgets</a></li>
@@ -158,7 +158,7 @@
                         <a href="#">Pages</a>
                         <ul class="sub-menu">
                             <li><a asp-action="ProductDetails" asp-controller="Products">Product Page</a></li>
-                            <li><a asp-action="CategoryDetails" asp-controller="Categories" asp-route-id="1">Category Page</a></li>
+                            <li><a asp-action="Store" asp-controller="Categories" asp-route-id="1">Category Page</a></li>
                             <li><a asp-action="CartDetails" asp-controller="Carts">Cart Page</a></li>
                             <li><a href="./checkout.html">Checkout Page</a></li>
                             <li><a asp-action="Contact" asp-controller="Contacts">Contact Page</a></li>
@@ -212,7 +212,7 @@
                         <h2>Questions</h2>
                         <div class="fw-latest-post-widget">
                             <div class="lp-item">
-                                <div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/1.jpg"></div>
+                                @*<div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/1.jpg"></div>*@
                                 <div class="lp-content">
                                     <h6>what shoes to wear</h6>
                                     <span>Oct 21, 2018</span>
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                             <div class="lp-item">
-                                <div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/2.jpg"></div>
+                                @*<div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/2.jpg"></div>*@
                                 <div class="lp-content">
                                     <h6>trends this year</h6>
                                     <span>Oct 21, 2018</span>
@@ -277,7 +277,6 @@
     </section>
     <!-- Footer section end -->
     <!--====== Javascripts & Jquery ======-->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/jquery.slicknav.min.js"></script>
@@ -287,6 +286,7 @@
     <script src="~/js/jquery-ui.min.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/js/Products/search.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

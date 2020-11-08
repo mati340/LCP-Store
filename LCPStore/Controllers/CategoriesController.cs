@@ -21,7 +21,7 @@ namespace LCPStore.Controllers
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> CategoryDetails(int? id)
+        public async Task<IActionResult> Store(int? id)
         {
             var category = new Category();
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
@@ -42,7 +42,8 @@ namespace LCPStore.Controllers
                 }
             }
 
-            return View(category);
+            TempData["CategoryDetails"] = "true";
+            return View(category.Products);
         }
 
         // Search By Price
