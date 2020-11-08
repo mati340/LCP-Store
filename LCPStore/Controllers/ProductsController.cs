@@ -9,6 +9,7 @@ using LCPStore.Data;
 using LCPStore.Models;
 using System.IO;
 using System.Threading;
+using System.Collections;
 
 namespace LCPStore.Controllers
 {
@@ -70,6 +71,15 @@ namespace LCPStore.Controllers
 
             ViewData["RelatedProducts"] = products; 
             return View(products);
+        }
+
+        public async Task<IActionResult> SearchProducts(string term)
+        {
+            var products = await _context.Product.Where(s => s.Name.Contains(term)
+                                                        || s.Description.Contains(term)).ToListAsync();
+            TempData["SearchProducts"] = "true";
+            ViewBag.Categories = new ArrayList(_context.Category.ToList());
+            return View("~/Views/Categories/Store.cshtml",products);
         }
         
         private bool ProductExists(int id)

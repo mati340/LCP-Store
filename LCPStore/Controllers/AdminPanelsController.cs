@@ -46,24 +46,24 @@ namespace LCPStore.Controllers
         {
             AdminPanel ap = new AdminPanel
             {
-                Accounts = _context.Account.Where(s => (s.Name.Contains(term))
+                Accounts = await _context.Account.Where(s => (s.Name.Contains(term))
                                                     || (s.Username.Contains(term)))
-                                                    .ToList(),
-                Orders = _context.Order.Where(s => (s.Address.Contains(term))
+                                                    .ToListAsync(),
+                Orders = await _context.Order.Where(s => (s.Address.Contains(term))
                                                     || (s.City.Contains(term))
                                                     || (s.Country.Contains(term))
                                                     || (s.ZipCode.Contains(term))
                                                     || (s.PhoneNumber.Contains(term)))
-                                                    .ToList(),
-                Products = _context.Product.Where(s => s.Name.Contains(term)
+                                                    .ToListAsync(),
+                Products = await _context.Product.Where(s => s.Name.Contains(term)
                                                     || (s.Description.Contains(term))
                                                     || (s.Price.ToString().Equals(term)))
-                                                    .ToList(),
-                Categories = _context.Category.Where(s => s.Name.Contains(term)).ToList(),
-                Contacts = _context.Contact.Where(s => s.Subject.Contains(term)
+                                                    .ToListAsync(),
+                Categories = await _context.Category.Where(s => s.Name.Contains(term)).ToListAsync(),
+                Contacts = await _context.Contact.Where(s => s.Subject.Contains(term)
                                                     || s.Body.Contains(term)
                                                     || s.Email.Contains(term))
-                                                    .ToList()
+                                                    .ToListAsync()
 
             };
 
@@ -72,15 +72,15 @@ namespace LCPStore.Controllers
 
         public ActionResult Charts()
         {
-            //var result = (from o in _context.OrderDetail
-            //              group o by o.Product.Name into o
-            //              orderby o.Count() descending
-            //              select new { o.Key, Total = o.Count() })
-            // .ToDictionary(x => x.Key, x => x.Total);
-            //ViewBag.OrderCount = result;
-            //var DateResult = _context.Order.GroupBy(x => x.OrderPlaced.Date, x => x.Id)
-            //            .Select(x => new { Date = x.Key.ToShortDateString(), Count = x.Count() }).ToList();
-            //ViewBag.DateResult = DateResult;
+            var result = (from o in _context.OrderItem
+                          group o by o.Product.Name into o
+                          orderby o.Sum(c => c.Quantity) descending
+                          select new { o.Key, Total = o.Sum(c => c.Quantity) })
+             .ToDictionary(x => x.Key, x => x.Total);
+            ViewBag.OrderCount = result;
+            var DateResult = _context.Order.GroupBy(x => x.OrderTime.Date, x => x.Id)
+                        .Select(x => new { Date = x.Key.ToShortDateString(), Count = x.Count() }).ToList();
+            ViewBag.DateResult = DateResult;
             return View();
         }
 

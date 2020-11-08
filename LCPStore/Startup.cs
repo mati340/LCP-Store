@@ -63,7 +63,7 @@ namespace LCPStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=AdminPanels}/{action=Tables}/{id?}");
+                    pattern: "{controller=Contacts}/{action=Contact}/{id?}");
             });
         }
     }
