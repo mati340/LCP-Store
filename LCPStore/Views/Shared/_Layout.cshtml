@@ -120,10 +120,11 @@
                                             <span>0</span>
                                         </div>
                                         <a asp-action="CartDetails" asp-controller="Carts">Shopping Cart</a> &nbsp; &nbsp;
-                                        <a asp-action="LogOut" asp-controller="Accounts">Log Out</a>
                                     </div>
-                                       
-                                    
+                                    <div class="up-item">
+                                        <i class="flaticon-logout"></i>
+                                        <a asp-action="LogOut" asp-controller="Accounts">Log Out</a>
+                                    </div> 
                                 }
                                 else
                                 {
@@ -180,7 +181,7 @@
     @RenderBody()
 
     <!-- Footer section -->
-    @*<section class="footer-section">
+    <section class="footer-section">
         <div class="container">
             <div class="footer-logo text-center">
                 <a asp-action="Index" asp-controller="Home"><img src="./img/logo-light2.png" alt=""></a>
@@ -196,9 +197,9 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="footer-widget about-widget">
                         <h2>Questions</h2>
-                        <ul>*@
-                            @*<li><a href="">About Us</a></li>*@
-                            @*<li><a href="">Track Orders</a></li>
+                        <ul>
+                            <li><a href="">About Us</a></li>
+                            <li><a href="">Track Orders</a></li>
                             <li><a href="">Returns</a></li>
                             <li><a href="">Jobs</a></li>
                             <li><a href="">Shipping</a></li>
@@ -218,7 +219,7 @@
                         <h2>Questions</h2>
                         <div class="fw-latest-post-widget">
                             <div class="lp-item">
-                                @*<div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/1.jpg"></div>*@
+                                <div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/1.jpg"></div>
                                 <div class="lp-content">
                                     <h6>what shoes to wear</h6>
                                     <span>Oct 21, 2018</span>
@@ -226,7 +227,7 @@
                                 </div>
                             </div>
                             <div class="lp-item">
-                                @*<div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/2.jpg"></div>*@
+                                <div class="lp-thumb set-bg" data-setbg="~/img/blog-thumbs/2.jpg"></div>
                                 <div class="lp-content">
                                     <h6>trends this year</h6>
                                     <span>Oct 21, 2018</span>
@@ -269,18 +270,18 @@
                     <a href="" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
                     <a href="" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
                     <a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
-                </div>*@
+                </div>
 
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                @*<p class="text-white text-center mt-5">
+                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
+                <p class="text-white text-center mt-5">
                     Copyright &copy;
                     <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                <*@@*/p>*@
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
 
-            @*</div>
+            </div>
         </div>
-    </section>*@
+    </section>
     <!-- Footer section end -->
     <!--====== Javascripts & Jquery ======-->
     <script src="~/js/jquery-3.2.1.min.js"></script>
