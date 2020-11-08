@@ -42,7 +42,6 @@ namespace LCPStore.Controllers
                 }
             }
 
-            TempData["CategoryDetails"] = "true";
             return View(category.Products);
         }
 
