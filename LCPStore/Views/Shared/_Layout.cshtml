@@ -156,22 +156,13 @@
                         <!--</ul>-->
                     </li>
                     <li><a asp-action="AboutUs" asp-controller="Home">About us</a></li>
-                    <li>
-                        <a asp-action="Contact" asp-controller="Contacts">Contact us</a>
-                       
-                    </li>
-                    <li>
-                        @*<a href="#">Pages</a>*@
-                        <ul class="sub-menu">
-                            <li><a asp-action="ProductDetails" asp-controller="Products">Product Page</a></li>
-                            <li><a asp-action="Store" asp-controller="Categories" asp-route-id="1">Category Page</a></li>
-                            <li><a asp-action="CartDetails" asp-controller="Carts">Cart Page</a></li>
-                            <li><a href="./checkout.html">Checkout Page</a></li>
-                            <li><a asp-action="Contact" asp-controller="Contacts">Contact Page</a></li>
-                            <li><a asp-action="LogOut" asp-controller="Accounts">Log Out</a></li>
-                            <li><a asp-action="AboutUs" asp-controller="Home">About us</a></li>
-                        </ul>
-                    </li>
+                    <li><a asp-action="Contact" asp-controller="Contacts">Contact us</a></li>    
+                    @{ var role = Context.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
+                        if ( role == "Admin")
+                        {
+                            <li><a asp-action="Tables" asp-controller="AdminPanels">Admin Panel</a></li>
+                        }
+                    }
                 </ul>
             </div>
         </nav>
