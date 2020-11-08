@@ -11,16 +11,16 @@
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background-color: #ff69b4;
-    border-color: #ff69b4;
+    background-color: #f51167;
+    border-color: #f51167;
     box-shadow: none;
     outline: none;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #ff69b4;
-    border-color: #ff69b4;
+    background-color: #f51167;
+    border-color: #f51167;
 }
 
 
@@ -30,7 +30,7 @@ section {
 
     section .section-title {
         text-align: center;
-        color: #ff69b4;
+        color: #f51167;
         margin-bottom: 50px;
         text-transform: uppercase;
     }
