@@ -66,17 +66,19 @@ namespace LCPStore.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contact([Bind("Id,Name,Email,Subject,Body")] Contact contact)
+        //[ValidateAntiForgeryToken]
+        public async Task<bool> Contact([Bind("Id,Name,Email,Subject,Body")] Contact contact)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
-                SendEmail(contact.Email, contact.Name);
-                return RedirectToAction(nameof(Index));
+                //SendEmail(contact.Email, contact.Name);
+                //return RedirectToAction(nameof(Index));
+                return true;
             }
-            return View(contact);
+            return false;
+            //return View(contact);
         }
 
         private bool ContactExists(int id)
