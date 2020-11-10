@@ -85,6 +85,13 @@ ol {
 /*---------------------
   Helper CSS
 -----------------------*/
+.trash{
+	padding-left:40px;
+	border:none;
+}
+.trash:hover{
+	cursor: pointer;
+}
 
 .section-title {
 	text-align: center;

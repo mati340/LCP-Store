@@ -27,7 +27,6 @@
     font-style: normal;
 }
 
-.flaticon-logout:before{content: "\f110"}
 .flaticon-add:before { content: "\f100"; }
 .flaticon-bag:before { content: "\f101"; }
 .flaticon-battery:before { content: "\f102"; }
