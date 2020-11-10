@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using LCPStore.Models;
 using System.Collections;
 using LCPStore.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LCPStore.Controllers
 {
@@ -24,7 +25,31 @@ namespace LCPStore.Controllers
 
         public IActionResult Index()
         {
+
+            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Accounts");
+            }
+
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
+
+            IEnumerable<Product> LetestProducts = _context.Product.ToList().TakeLast(5);
+            ViewData["LetestProducts"] = LetestProducts;
+
+            //Relevant Products Per User
+
+            var categories =(from orderItem in _context.OrderItem
+                             where (orderItem.Order.Account.Name == user)
+                             select orderItem.Product.Category).ToList().Distinct().TakeLast(2);
+
+            var RelevantProduct = (from p in _context.Product
+                                   where ((p.Category == categories.ToArray()[0]) || (p.Category == categories.ToArray()[1]))
+                                   select p).ToList().Take(6);
+
+            ViewData["RelevantProducts"] = RelevantProduct;
+
+
             return View();
 
         }
