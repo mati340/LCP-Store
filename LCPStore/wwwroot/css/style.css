@@ -85,6 +85,13 @@ ol {
 /*---------------------
   Helper CSS
 -----------------------*/
+.trash{
+	padding-left:40px;
+	border:none;
+}
+.trash:hover{
+	cursor: pointer;
+}
 
 .section-title {
 	text-align: center;
@@ -899,6 +906,7 @@ ol {
 	width: 148px;
 	padding: 8px 18px 0;
 	text-align: left;
+	cursor: pointer;
 }
 
 .product-item .pi-links a.add-card:hover span {
