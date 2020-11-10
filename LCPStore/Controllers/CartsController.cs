@@ -138,9 +138,11 @@ namespace LCPStore.Controllers
                 {
                     await Plus(c.Id);
                 }
+
             }
             return true;
             //return RedirectToAction("ProductDetails","Products", new { id = (productId) });
+
         }
 
         public async Task AddProduct(int id)
