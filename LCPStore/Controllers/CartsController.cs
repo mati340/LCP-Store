@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
 using Microsoft.CodeAnalysis;
+using System.Security.Claims;
 
 //dffdvf
 namespace LCPStore.Controllers
@@ -95,17 +96,17 @@ namespace LCPStore.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         //Add To Cart
-        public async Task<IActionResult> AddToCart(int productId, int quantity=1)
+        public async Task<bool> AddToCart(int productId, int quantity=1)
         {
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Accounts");
-            }
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            //if (user == null)
+            //{
+            //    return RedirectToAction("Login", "Accounts");
+            //}
 
-            var query = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault<Cart>();
+            var query = _context.Cart.Where(s => s.Account.Username == user).FirstOrDefault<Cart>();
             if (query == null)
             {
                 Account account = _context.Account.First(s => s.Name == user);
@@ -137,9 +138,11 @@ namespace LCPStore.Controllers
                 {
                     await Plus(c.Id);
                 }
-            }    
 
-            return RedirectToAction("Store","Categories");
+            }
+            return true;
+            //return RedirectToAction("ProductDetails","Products", new { id = (productId) });
+
         }
 
         public async Task AddProduct(int id)
