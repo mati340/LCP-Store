@@ -139,7 +139,7 @@ namespace LCPStore.Controllers
                 }
             }    
 
-            return RedirectToAction("ProductDetails","Products", new { id = (productId) });
+            return RedirectToAction("Store","Categories");
         }
 
         public async Task AddProduct(int id)
