@@ -73,6 +73,7 @@
     <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
     <link rel="stylesheet" href="~/css/animate.css" />
     <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @*<link rel="stylesheet" href="~/AboutUs/css/AboutUs.css" />*@
 
 
@@ -124,7 +125,7 @@
                                     <div class="up-item">
                                         <i class="flaticon-logout"></i>
                                         <a asp-action="LogOut" asp-controller="Accounts">Log Out</a>
-                                    </div> 
+                                    </div>
                                 }
                                 else
                                 {
@@ -134,7 +135,7 @@
                                     </div>
                                 }
                             }
-                           
+
                         </div>
                     </div>
                 </div>
@@ -148,7 +149,7 @@
                     <li>
                         <a asp-action="Store" asp-controller="Categories">Store</a>
                         <!--<ul class="sub-menu">-->
-                            @*<li><a href="#">Outdoors and Camping</a></li>
+                        @*<li><a href="#">Outdoors and Camping</a></li>
                             <li><a href="#">Gadgets</a></li>
                             <li><a href="#">Baby Essentials</a></li>
                             <li><a href="#">Convenience</a></li>
@@ -156,9 +157,9 @@
                         <!--</ul>-->
                     </li>
                     <li><a asp-action="AboutUs" asp-controller="Home">About us</a></li>
-                    <li><a asp-action="Contact" asp-controller="Contacts">Contact us</a></li>    
+                    <li><a asp-action="Contact" asp-controller="Contacts">Contact us</a></li>
                     @{ var role = Context.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
-                        if ( role == "Admin")
+                        if (role == "Admin")
                         {
                             <li><a asp-action="Tables" asp-controller="AdminPanels">Admin Panel</a></li>
                         }
@@ -263,12 +264,12 @@
                     <a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
                 </div>
 
-                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
+                Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
                 <p class="text-white text-center mt-5">
                     Copyright &copy;
                     <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                 </p>
-                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
+                Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
 
             </div>
         </div>
@@ -285,6 +286,7 @@
     <script src="~/js/main.js"></script>
     <script src="~/js/Products/search.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/js/Cart/AddToCart.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>
