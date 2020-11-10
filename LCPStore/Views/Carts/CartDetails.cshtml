@@ -15,7 +15,6 @@
     </div>
 </div>
 <!-- Page info end -->
-
 <!-- cart section end -->
 <section class="cart-section spad">
     <div class="container">
@@ -24,6 +23,7 @@
                 <div class="cart-table">
                     <h3>Your Cart</h3>
                     <div class="cart-table-warp">
+                        <form id="delete-form"></form>
                         <table>
                             <thead>
                                 <tr>
@@ -35,7 +35,7 @@
                             <tbody>
                                 @foreach (var item in Model.CartItems)
                                 {
-                                    <tr>
+                                    <tr id="@item.Id">
                                         <td class="product-col">
                                             @if (item.Product.Image != null)
                                             {
@@ -61,13 +61,18 @@
                                             </div>
                                         </td>
                                         <td class="total-col"><h4>$@item.TotalPrice,00</h4></td>
+                                        <td>
+                                            <button class="trash" ><i class="fa fa-trash-o" style="font-size:24px"></i></button>
+                                            @*<input id="trash" form="delete-form" value="@item.Id" />
+                                                <a id="trash"><i class="fa fa-trash-o" style="font-size:24px"></i></a>*@
+                                        </td>
                                     </tr>
                                 }
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                     <div class="total-cost">
-                        <h6>Total <span>$@Model.SumToPay,00</span></h6>
+                        <h6>Total <span id="total_cost">$@Model.SumToPay,00</span></h6>
                     </div>
                 </div>
             </div>
@@ -83,76 +88,79 @@
     </div>
 </section>
 <!-- cart section end -->
+@section Scripts {
+    <script src="~/js/Cart/RemoveFromCart.js"></script>
+}
 
 <!-- Related product section -->
 @*<section class="related-product-section">
-    <div class="container">
-        <div class="section-title text-uppercase">
-            <h2>Continue Shopping</h2>
+        <div class="container">
+            <div class="section-title text-uppercase">
+                <h2>Continue Shopping</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <div class="tag-new">New</div>
+                            <img src="./img/product/2.jpg" alt="">
+                            <div class="pi-links">
+                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>$35,00</h6>
+                            <p>Black and White Stripes Dress</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="./img/product/5.jpg" alt="">
+                            <div class="pi-links">
+                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>$35,00</h6>
+                            <p>Flamboyant Pink Top </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="./img/product/9.jpg" alt="">
+                            <div class="pi-links">
+                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>$35,00</h6>
+                            <p>Flamboyant Pink Top </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="./img/product/1.jpg" alt="">
+                            <div class="pi-links">
+                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>$35,00</h6>
+                            <p>Flamboyant Pink Top </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div class="tag-new">New</div>
-                        <img src="./img/product/2.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/5.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/9.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/1.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>*@
+    </section>*@
 <!-- Related product section end -->
