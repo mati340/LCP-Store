@@ -37,25 +37,7 @@ namespace LCPStore.Controllers
             return cartItem.Cart.SumToPay;
         }
 
-        // POST: CartItems/Delete/5
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<double[]> Update(int id, int quantity)
-        {
-            var cartItem = await _context.CartItem.Include(c => c.Cart).Include(p => p.Product).FirstOrDefaultAsync(c => c.Id == id);
-
-            cartItem.Quantity += quantity;
-            cartItem.Cart.SumToPay -= cartItem.TotalPrice;
-            cartItem.TotalPrice += (cartItem.Product.Price * quantity);
-            cartItem.Cart.SumToPay += cartItem.TotalPrice;
-
-            await _context.SaveChangesAsync();
-
-            double[] arr = { cartItem.TotalPrice, cartItem.Cart.SumToPay };
-            return arr;
-        }
-
-        private bool CartItemExists(int id)
+            private bool CartItemExists(int id)
         {
             return _context.CartItem.Any(e => e.Id == id);
         }

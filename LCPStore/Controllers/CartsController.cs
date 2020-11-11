@@ -21,9 +21,7 @@ namespace LCPStore.Controllers
         {
             _context = context; 
         }
-
-        [HttpPost]
-        public async Task<double[]> Plus(int id)
+        public async Task<IActionResult> Plus(int id)
         {
             var query = await _context.CartItem.Include(p=>p.Product).FirstOrDefaultAsync(s => s.Id == id);
             if (query != null)
@@ -33,12 +31,10 @@ namespace LCPStore.Controllers
                 await _context.SaveChangesAsync();
                 await UpdateSumToPay(query.Product.Price);
             }
-            double[] arr = { query.TotalPrice, query.Cart.SumToPay };
-            return arr;
+            return RedirectToAction(nameof(CartDetails));
         }
         
-        [HttpPost]
-        public async Task<double[]> Minus(int id)
+        public async Task<IActionResult> Minus(int id)
         {
             var query = await _context.CartItem.Include(p => p.Product).FirstOrDefaultAsync(s => s.Id == id);
             if (query != null)
@@ -48,8 +44,7 @@ namespace LCPStore.Controllers
                 await _context.SaveChangesAsync();
                 await UpdateSumToPay(-query.Product.Price);
             }
-            double[] arr = { query.TotalPrice, query.Cart.SumToPay };
-            return arr;
+            return RedirectToAction(nameof(CartDetails));
         }
 
         public async Task UpdateSumToPay(double price)
