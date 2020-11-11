@@ -87,7 +87,13 @@ namespace LCPStore.Controllers
                 order.OrderTime = DateTime.Now;
                 order.Account = cart.Account;
                 order.OrderItems = new List<OrderItem>();
-                order.TotalPay = cart.SumToPay;
+                if (order.Delivery.ToString() == "Standart") 
+                {
+                    order.TotalPay = cart.SumToPay;
+                }
+                else 
+                { order.TotalPay = cart.SumToPay + 3; }
+                
                 foreach (var item in cart.CartItems)
                 {
                     order.OrderItems.Add(new OrderItem() { Order = order, Product = item.Product, Quantity = item.Quantity, TotalPrice = item.TotalPrice });
