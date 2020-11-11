@@ -41,17 +41,22 @@ namespace LCPStore.Controllers
 
             var categories =(from orderItem in _context.OrderItem
                              where (orderItem.Order.Account.Name == user)
-                             select orderItem.Product.Category).ToList().Distinct().TakeLast(2);
+                             select orderItem.Product.Category);
+            
+            if(categories!=null)
+            {
+                categories.ToList().Distinct().TakeLast(2);
 
-            var RelevantProduct = (from p in _context.Product
-                                   where ((p.Category == categories.ToArray()[0]) || (p.Category == categories.ToArray()[1]))
-                                   select p).ToList().Take(6);
+                var RelevantProduct = (from p in _context.Product
+                                       where ((p.Category == categories.ToArray()[0]) || (p.Category == categories.ToArray()[1]))
+                                       select p);
+                if (RelevantProduct != null)
+                    RelevantProduct.ToList().Take(6);
 
-            ViewData["RelevantProducts"] = RelevantProduct;
-
+                ViewData["RelevantProducts"] = RelevantProduct;
+            }
 
             return View();
-
         }
 
         public IActionResult AboutUs()
