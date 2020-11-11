@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace LCPStore.Data
@@ -24,6 +25,12 @@ namespace LCPStore.Data
                 new Category{Name = "Baby Essentials"},
                 new Category{Name = "Convenience"},
                 new Category{Name = "Sports Accessories"}
+            };
+
+
+            BigInteger[] image = new[]
+            {
+                BigInteger.Parse("0xFFD8FFE000104A46494600010102001C001C0000FFDB008400020202020202030303030404030404050504040505080606060606080C0709070709070C0B0D0A0A0A0D0B130F0D0D0F1316121112161A18181A2120212C2C3B01020202020202030303030404030404050504040505080606060606080C0709070709070C0B0D")
             };
 
             foreach (Category c in categories)
@@ -82,7 +89,8 @@ namespace LCPStore.Data
                                 "Large: 138 x 62 x 52cm (With/Without Lid)" +
                                 "Small: 120 x 62 x 52cm (With/Without Lid)" +
                                 "Package Content:" +
-                                "1 x Collapsible Bathtub",Price=815,Category=categories[0] },
+                                "1 x Collapsible Bathtub",Price=815,Category=categories[0]},
+
                  new Product{Name ="Shower LED Light 7-Color Head", Created = DateTime.Today,
                  Description= "This Shower LED Light makes bathtimes even more special and relaxing" +
                                 "It has seven light colors that automatically change regardless of water temperature" +
