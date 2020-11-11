@@ -21,10 +21,12 @@ namespace LCPStore.Controllers
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Store(int? id)
+        public async Task<IActionResult> Store(string? id)
         {
             var category = new Category();
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
+
+            var isValidId = int.TryParse(id, out int categoryId);
 
             if (id == null)
             {
@@ -32,10 +34,15 @@ namespace LCPStore.Controllers
                     .Include(p => p.Products)
                     .FirstOrDefaultAsync();
             }
-            else {
+            else if (!isValidId)
+            {
+                throw new Exception("Id is not valid");
+            }
+            else
+            {
                 category = await _context.Category
                     .Include(p => p.Products)
-                    .FirstOrDefaultAsync(m => m.Id == id);
+                    .FirstOrDefaultAsync(m => m.Id == categoryId);
                 if (category == null)
                 {
                     return NotFound();
