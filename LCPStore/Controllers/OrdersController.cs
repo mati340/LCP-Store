@@ -49,13 +49,21 @@ namespace LCPStore.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (user == null)
             {
                 return RedirectToAction("Login", "Accounts");
             }
 
-            Cart cart = _context.Cart.Where(s => s.Account.Name == user).Include(i=>i.CartItems).ThenInclude(p=>p.Product).FirstOrDefault();
+            Cart cart = _context.Cart.Where(s => s.Account.Username == user).Include(i=>i.CartItems).ThenInclude(p=>p.Product).FirstOrDefault();
+            foreach(CartItem ci in cart.CartItems)
+            {
+                if(ci.Quantity == 0)
+                {
+                    _context.CartItem.Remove(ci);
+                }
+            }
+            _context.SaveChanges();
             ViewData["cart_to_view"] = cart;
 
 
