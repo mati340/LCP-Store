@@ -42,8 +42,8 @@ namespace LCPStore.Controllers
             var categories =(from orderItem in _context.OrderItem
                              where (orderItem.Order.Account.Name == user)
                              select orderItem.Product.Category);
-            
-            if(categories!=null)
+
+            if (categories != null)
             {
                 categories.ToList().Distinct().TakeLast(2);
 

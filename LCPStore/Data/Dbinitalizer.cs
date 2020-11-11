@@ -83,6 +83,7 @@ namespace LCPStore.Data
                                 "Small: 120 x 62 x 52cm (With/Without Lid)" +
                                 "Package Content:" +
                                 "1 x Collapsible Bathtub",Price=815,Category=categories[0] },
+
                  new Product{Name ="Shower LED Light 7-Color Head", Created = DateTime.Today,
                  Description= "This Shower LED Light makes bathtimes even more special and relaxing" +
                                 "It has seven light colors that automatically change regardless of water temperature" +
@@ -92,6 +93,7 @@ namespace LCPStore.Data
                                 "Exterior Thread Size: 20mm (universal)" +
                                 "Package Contents:" +
                                 "1 x Shower LED Light", Price=29,Category=categories[1] },
+
                  new Product{Name ="Portable Picture Printer Device ", Created = DateTime.Today,
                              Description= "Print your favorite photos on your phone instantly using this portable picture printer" +
                                             "You can connect it to your phone wirelessly through Bluetooth and provides high-quality printing" +
@@ -184,7 +186,7 @@ namespace LCPStore.Data
                                             "Material: Silicone / Capacity: 10 ml" +
                                             "Size: 68 x 63 x 20 mm / Weight: 9 g / Elastic, Adult Size, Unisex (Sanitizer NOT Included)" +
                                             "Package Contents:" +
-                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3] },
+                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3], Image = 0xFFD8FFE000104A46494600010200000100010000FFDB004300080606070605080707070909080A0C140D0C0B0B0C1912130F141D1A1F1E1D1A1C1C20242E2720222C231C1C2837292C30313434341F27393D38323C2E333432FFDB0043010909090C0B0C180D0D1832211C213232323232323232323232323232323232323232 },
 
                      new Product{Name ="Penguin Egg Holder Boiling Tool", Created = DateTime.Today,
                                 Description = "This penguin egg holder holds the eggs in place while it boils so they cook evenly and crack-free" +
