@@ -254,6 +254,46 @@ namespace LCPStore.Data
                 context.Product.Add(p);
             }
 
+            DateTime[] dateTimes = new DateTime[]
+            {
+                new DateTime(1994,04,06),
+                new DateTime(1996,08,11),
+                new DateTime(1993,10,11),
+                new DateTime(1995,09,14),
+                new DateTime(2020,08,10),
+                new DateTime(2020,10,1),
+                new DateTime(2020,06,07),
+                new DateTime(2020,08,11)
+            };
+
+            var accounts = new Account[]
+            {
+                new Account{Username="leelisker4@gmail.com",Password="1234",Gender=(Gender)1,Name="Likush",BirthDate=dateTimes[0], Registered = dateTimes[4], Role =(Role)0 },
+                new Account{Username="meitalzaguri95@gmail.com",Password="1234",Gender=(Gender)1,Name="Meital",BirthDate=dateTimes[1], Registered = dateTimes[5], Role =(Role)0 },
+                new Account{Username="liraz4@gmail.com",Password="1234",Gender=(Gender)1,Name="Liraz",BirthDate=dateTimes[2], Registered = dateTimes[6], Role =(Role)1 },
+                new Account{Username="Matan@gmail.com",Password="1234",Gender=(Gender)0,Name="Matan",BirthDate=dateTimes[3], Registered = dateTimes[7], Role =(Role)1 },
+            };
+
+            foreach (Account a in accounts)
+            {
+                context.Account.Add(a);
+            }
+
+            var orders = new Order[]
+            {
+                new Order{Country = "Israel", City = "Ashdod", Address = "Bareket 24", ZipCode = "1828373" ,PhoneNumber = "0521118765", TotalPay= 1630, Delivery = (Delivery)0, OrderTime = dateTimes[4] },
+                new Order{Country = "Israel", City = "Yavne", Address = "Maapilim 16", ZipCode = "1874859" ,PhoneNumber = "052999362", TotalPay= 1705, Delivery = (Delivery)1, OrderTime = dateTimes[5] },
+                new Order{Country = "Israel", City = "Eilat", Address = "Tamar 4", ZipCode = "7080000" ,PhoneNumber = "0546258943", TotalPay= 850, Delivery = (Delivery)0, OrderTime = dateTimes[6] },
+                new Order{Country = "Israel", City = "Tzfat", Address = "Hashmonaim", ZipCode = "7546789" ,PhoneNumber = "0509876523", TotalPay= 460, Delivery = (Delivery)1, OrderTime = dateTimes[7] },
+
+            };
+
+            foreach (Order o in orders)
+
+            {
+                context.Order.Add(o);
+            }
+
             context.SaveChanges();
 
             }         
