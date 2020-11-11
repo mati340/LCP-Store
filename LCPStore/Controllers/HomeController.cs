@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LCPStore.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

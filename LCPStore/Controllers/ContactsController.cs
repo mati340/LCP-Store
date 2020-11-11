@@ -12,6 +12,7 @@ using System.Net.Mail;
 
 namespace LCPStore.Controllers
 {
+    
     public class ContactsController : Controller
     {
         private readonly LCPStoreContext _context;
@@ -73,8 +74,8 @@ namespace LCPStore.Controllers
             {
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
-                //SendEmail(contact.Email, contact.Name);
-                //return RedirectToAction(nameof(Index));
+                SendEmail(contact.Email, contact.Name);
+                //return redirecttoaction(nameof(index));
                 return true;
             }
             return false;
