@@ -44,8 +44,8 @@
                 @*<div class="p-review">
                         <a href="">3 reviews</a>|<a href="">Add your review</a>
                     </div>*@
-                <form id="AddCartForm" asp-action="AddToCart" asp-controller="Carts">
-                    <input hidden="true" id="productId" name="productId" type="text" value="@Model.Id">
+                <form id="AddCartForm">
+                    <input hidden id="productId" name="productId" type="text" value="@Model.Id">
                     <div class="quantity">
                         <p>Quantity</p>
                         <div class="pro-qty"><input id="quantity" name="quantity" type="text" value="1"></div>
@@ -119,12 +119,9 @@
                         {
                             <img src="~/img/single-product/1.jpg" alt="">
                         }
-                        <div class="pi-links">
-                            <form asp-action="AddToCart" asp-controller="Carts" asp-route-productId="@product.Id">
+                        <div class="pi-links" id="@product.Id">
+                            <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
 
-                                <a class="add-card"><input type="submit" /><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
-                            </form>
                         </div>
                     </div>
                     <div class="pi-text">
@@ -138,7 +135,3 @@
     </div>
 </section>
 <!-- RELATED PRODUCTS section end -->
-@section Scripts{
-    <script src="~/js/Cart/AddToCart.js"></script>
-
-}
