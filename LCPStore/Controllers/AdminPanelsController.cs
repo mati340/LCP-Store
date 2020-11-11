@@ -290,7 +290,7 @@ namespace LCPStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProductEdit(int id, [Bind("Id,Name,Description,Price,Created")] Product product)
+        public async Task<IActionResult> ProductEdit(int id, [Bind("Id,Name,Description,Price,ImageFile,Created")] Product product)
         {
             if (id != product.Id)
             {
@@ -301,6 +301,11 @@ namespace LCPStore.Controllers
             {
                 try
                 {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        product.ImageFile.CopyTo(ms);
+                        product.Image = ms.ToArray();
+                    }
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
