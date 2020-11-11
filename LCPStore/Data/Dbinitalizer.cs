@@ -100,6 +100,7 @@ namespace LCPStore.Data
                                 "Exterior Thread Size: 20mm (universal)" +
                                 "Package Contents:" +
                                 "1 x Shower LED Light", Price=29,Category=categories[1] },
+
                  new Product{Name ="Portable Picture Printer Device ", Created = DateTime.Today,
                              Description= "Print your favorite photos on your phone instantly using this portable picture printer" +
                                             "You can connect it to your phone wirelessly through Bluetooth and provides high-quality printing" +
@@ -192,7 +193,7 @@ namespace LCPStore.Data
                                             "Material: Silicone / Capacity: 10 ml" +
                                             "Size: 68 x 63 x 20 mm / Weight: 9 g / Elastic, Adult Size, Unisex (Sanitizer NOT Included)" +
                                             "Package Contents:" +
-                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3] },
+                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3]},
 
                      new Product{Name ="Penguin Egg Holder Boiling Tool", Created = DateTime.Today,
                                 Description = "This penguin egg holder holds the eggs in place while it boils so they cook evenly and crack-free" +
@@ -201,7 +202,7 @@ namespace LCPStore.Data
                                                 "It can hold six eggs at a time" +
                                                 "Material: PP / Size: 14.6 x 12.1 x 12.4 cm" +
                                                 "Package Content:" +
-                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3] },
+                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3]},
 
                       new Product{Name ="Cleaning Slippers Floor Mop Flip-Flops", Created = DateTime.Today,
                                   Description ="Clean your floor with every step and keep it shiny by wearing these cleaning slippers" +
