@@ -54,9 +54,9 @@
                                         <td class="quy-col">
                                             <div class="quantity">
                                                 <div class="pro-qty">
-                                                    <a class="dec qtybtn" asp-action="Minus" asp-route-id="@item.Id">-</a>
-                                                    <input type="text" value="@item.Quantity">
-                                                    <a class="inc qtybtn" asp-action="Plus" asp-route-id="@item.Id">+</a>
+                                                    <a class="dec qtybtn">-</a>
+                                                    <input type="text" class="qu-col" value="@item.Quantity" onfocus="this.oldvalue = this.value;" oninput="onChangefun(this, @item.Id);this.oldvalue = this.value;">
+                                                    <a class="inc qtybtn">+</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -90,6 +90,7 @@
 <!-- cart section end -->
 @section Scripts {
     <script src="~/js/Cart/RemoveFromCart.js"></script>
+    <script src="~/js/Cart/ChangeQuantity.js"></script>
 }
 
 <!-- Related product section -->
