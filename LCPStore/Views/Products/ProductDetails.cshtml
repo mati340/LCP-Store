@@ -45,7 +45,7 @@
                         <a href="">3 reviews</a>|<a href="">Add your review</a>
                     </div>*@
                 <form id="AddCartForm" asp-action="AddToCart" asp-controller="Carts">
-                    <input hidden id="productId" name="productId" type="text" value="@Model.Id">
+                    <input hidden="true" id="productId" name="productId" type="text" value="@Model.Id">
                     <div class="quantity">
                         <p>Quantity</p>
                         <div class="pro-qty"><input id="quantity" name="quantity" type="text" value="1"></div>
@@ -105,55 +105,40 @@
         </div>
         <div class="product-slider owl-carousel">
 
-                @{ var products = (IEnumerable<LCPStore.Models.Product>)ViewData["RelatedProducts"]; }
-                @foreach (var product in products)
-                {
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            @if (product.Image != null)
-                            {
-                                String img = Convert.ToBase64String(product.Image);
-                                <img src="data:image/png;base64,@img" />
-                            }
-                            else
-                            {
-                                <img src="~/img/single-product/1.jpg" alt="">
-                            }
-                            <div class="pi-links"  id="@product.Id">
-                                <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                @*<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>*@
-                            </div>
-                        </div>
-                        <div class="pi-text">
-                            <h6>$@product.Price,00</h6>
-                            <p>@product.Name </p>
+            @{ var products = (IEnumerable<LCPStore.Models.Product>)ViewData["RelatedProducts"]; }
+            @foreach (var product in products)
+            {
+                <div class="product-item">
+                    <div class="pi-pic">
+                        @if (product.Image != null)
+                        {
+                            String img = Convert.ToBase64String(product.Image);
+                            <img src="data:image/png;base64,@img" />
+                        }
+                        else
+                        {
+                            <img src="~/img/single-product/1.jpg" alt="">
+                        }
+                        <div class="pi-links">
+                            <form asp-action="AddToCart" asp-controller="Carts" asp-route-productId="@product.Id">
+
+                                <a class="add-card"><input type="submit" /><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
+                            </form>
                         </div>
                     </div>
+                    <div class="pi-text">
+                        <h6>$@product.Price,00</h6>
+                        <p>@product.Name </p>
+                    </div>
+                </div>
 
-                }
+            }
         </div>
     </div>
 </section>
 <!-- RELATED PRODUCTS section end -->
+@section Scripts{
+    <script src="~/js/Cart/AddToCart.js"></script>
 
-@*@section Scripts{
-
-    <script id="results" type="text/html">
-
-        <div class="product-item">
-            <div class="pi-pic">
-                <img src="~/img/product/3.jpg" alt="">
-                <div class="pi-links">
-                    <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                    <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                </div>
-            </div>
-            <div class="pi-text">
-                <h6>$ ${price},00</h6>
-                <p>${name}</p>
-            </div>
-        </div>
-
-    </script>
-
-        }*@
+}
