@@ -55,7 +55,7 @@ namespace LCPStore.Controllers
                 return RedirectToAction("Login", "Accounts");
             }
 
-            Cart cart = _context.Cart.Where(s => s.Account.Username == user).Include(i=>i.CartItems).ThenInclude(p=>p.Product).FirstOrDefault();
+            Cart cart = _context.Cart.Where(s => s.Account.Username == user).Include(i=>i.CartItems).ThenInclude(p=>p.Product).First();
             foreach(CartItem ci in cart.CartItems)
             {
                 if(ci.Quantity == 0)

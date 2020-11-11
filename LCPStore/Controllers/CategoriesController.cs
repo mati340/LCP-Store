@@ -32,7 +32,8 @@ namespace LCPStore.Controllers
             {
                 category = await _context.Category
                     .Include(p => p.Products)
-                    .FirstOrDefaultAsync();
+                    .FirstAsync();
+                     return NotFound();
             }
             else if (!isValidId)
             {
