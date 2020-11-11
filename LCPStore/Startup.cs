@@ -63,7 +63,7 @@ namespace LCPStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Contacts}/{action=Contact}/{id?}");
+                    pattern: "{controller=Categories}/{action=Store}/{id?}");
             });
         }
     }
