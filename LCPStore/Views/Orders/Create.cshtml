@@ -70,7 +70,7 @@
                             <div class="cf-radio-btns">
                                 <div class="cfr-item">
                                     <input asp-for="Delivery" class="form-control" type="radio" name="Delivery" id="ship-2" value="@delivery[1].Value">
-                                    <label for="ship-2">$3.45</label>
+                                    <label for="ship-2">$3</label>
                                     <span asp-validation-for="Delivery" class="text-danger"></span>
                                 </div>
                                 <div id="log"></div>
@@ -112,8 +112,6 @@
                      
                     </ul>
                         <ul class="price-list">
-                            <li>Total<span>$@cart.SumToPay,00</span></li>
-                            <li>Shipping<span>free</span></li>
                             <li class="total">Total<span>$@cart.SumToPay,00</span></li>
                         </ul>
                 </div>
