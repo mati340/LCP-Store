@@ -17,9 +17,7 @@
          dataType: "JSON",
          success: function (data) {
              console.log(data);
-             $(document.getElementsByClassName("col-lg-4 col-sm-6")).remove();
-
-
+             //$(document.getElementsByClassName("col-lg-4 col-sm-6")).remove();
              $('#results').tmpl(data).appendTo('#tbody');
          },
          error: function (data) {
