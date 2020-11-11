@@ -42,7 +42,7 @@
                     <h2 class="fw-title">refine by</h2>
                     <div class="price-range-wrap">
                         <h4>Price</h4>
-                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="270">
+                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="1000">
                             <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div>
                             <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;">
                             </span>
@@ -61,9 +61,6 @@
                     </div>
                 </div>
             </div>
-
-            @*@await Html.PartialAsync("../Products/SearchProducts.cshtml", Model)*@
-
             <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
                 <div class="row" id="tbody">
                     @foreach (var product in Model)
@@ -83,10 +80,6 @@
                                             <img src="~/img/single-product/1.jpg" alt="@Html.DisplayFor(model => product.Name)">
                                         }
                                     </a>
-                                    <div class="pi-links" id="@product.Id">
-                                        <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                        @*<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>*@
-                                    </div>
                                 </div>
                                 <div class="pi-text">
                                     <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
@@ -121,9 +114,6 @@
                     <a href="/Products/ProductDetails/${id}">
                         <img src="data:image/png;base64,${image}" alt="${name}">
                     </a>
-                        <div class="pi-links" id="${id}">
-                            <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        </div>
                     </div>
                 <div class="pi-text">
                     <h6>$ ${price},00</h6>

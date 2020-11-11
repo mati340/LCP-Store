@@ -16,7 +16,6 @@
          },
          dataType: "JSON",
          success: function (data) {
-             console.log(data);
              $('#results').tmpl(data).appendTo('#tbody');
          },
          error: function (data) {
