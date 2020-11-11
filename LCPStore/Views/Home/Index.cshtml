@@ -96,18 +96,19 @@
 
                     <div class="product-item">
                         <div class="pi-pic">
-                            @if (product.Image != null)
-                            {
-                                String img = Convert.ToBase64String(product.Image);
-                                <img src="data:image/png;base64,@img" />
-                            }
-                            else
-                            {
-                                <img src="~/img/single-product/1.jpg" alt="">
-                            }
-                            <div class="pi-links">
-                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                                @if (product.Image != null)
+                                {
+                                    String img = Convert.ToBase64String(product.Image);
+                                    <img src="data:image/png;base64,@img" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/single-product/1.jpg" alt="">
+                                }
+                            </a>
+                            <div class="pi-links" id="@product.Id">
+                                <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                             </div>
                         </div>
                         <div class="pi-text">
@@ -137,19 +138,20 @@
 
                     <div class="product-item">
                         <div class="pi-pic">
-                            @if (product.Image != null)
-                            {
-                                String img = Convert.ToBase64String(product.Image);
-                                <img src="data:image/png;base64,@img" />
-                            }
-                            else
-                            {
-                                <img src="~/img/single-product/1.jpg" alt="">
-                            }
-                            <div class="pi-links">
-                                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                            </div>
+                            <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                                @if (product.Image != null)
+                                {
+                                    String img = Convert.ToBase64String(product.Image);
+                                    <img src="data:image/png;base64,@img" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/single-product/1.jpg" alt="">
+                                }
+                            </a>
+                                <div class="pi-links" id="@product.Id">
+                                    <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                </div>
                         </div>
                         <div class="pi-text">
                             <h6>$@product.Price,00</h6>

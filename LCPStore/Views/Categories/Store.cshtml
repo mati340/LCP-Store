@@ -28,12 +28,12 @@
                             <li>
                                 <a asp-action="Store" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
                                 @*<ul class="sub-menu">
-                                <li><a href="#">Midi Dresses <span>(2)</span></a></li>
-                                <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
-                                <li><a href="#">Prom Dresses<span>(36)</span></a></li>
-                                <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
-                                <li><a href="#">Mini Dresses<span>(19)</span></a></li>
-                            </ul>*@
+                                        <li><a href="#">Midi Dresses <span>(2)</span></a></li>
+                                        <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
+                                        <li><a href="#">Prom Dresses<span>(36)</span></a></li>
+                                        <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
+                                        <li><a href="#">Mini Dresses<span>(19)</span></a></li>
+                                    </ul>*@
                             </li>
                         }
                     </ul>
@@ -97,6 +97,9 @@
         </div>
     </div>
 </section>
+<a href="/Products/ProductDetails/${id}">
+
+</a>
 
 
 <!-- Category section end -->
@@ -114,7 +117,7 @@
                     <a href="/Products/ProductDetails/${id}">
                         <img src="data:image/png;base64,${image}" alt="${name}">
                     </a>
-                    </div>
+                </div>
                 <div class="pi-text">
                     <h6>$ ${price},00</h6>
                     <p>${name}</p>
