@@ -10,7 +10,7 @@ using LCPStore.Models;
 using Microsoft.CodeAnalysis;
 using System.Security.Claims;
 
-//dffdvf
+
 namespace LCPStore.Controllers
 {
     public class CartsController : Controller
@@ -54,7 +54,7 @@ namespace LCPStore.Controllers
 
         public async Task UpdateSumToPay(double price)
         {
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Name == user);
             //if cart==null  TODO
             cart.SumToPay += price;
@@ -66,13 +66,13 @@ namespace LCPStore.Controllers
         {
             if (id == null)
             {
-                var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+                var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
                 if (user == null)
                 {
                     return RedirectToAction("Login", "Accounts");
                 }
 
-                var c = _context.Cart.Where(s => s.Account.Name == user).FirstOrDefault();
+                var c = _context.Cart.Where(s => s.Account.Username == user).FirstOrDefault();
                 if (c == null)
                     return NotFound();
                 id = c.Id;
@@ -103,13 +103,13 @@ namespace LCPStore.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //Add To Cart
-        public async Task AddToCart(int productId, int quantity=1)
+        public async Task<bool> AddToCart(int productId, int quantity=1)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            //if (user == null)
-            //{
-            //    return RedirectToAction("Login", "Accounts");
-            //}
+            if (user == null)
+            {
+                return false;
+            }
 
             var query = _context.Cart.Where(s => s.Account.Username == user).FirstOrDefault<Cart>();
             if (query == null)
@@ -145,6 +145,7 @@ namespace LCPStore.Controllers
                 }
 
             }
+            return true;
             //return RedirectToAction("ProductDetails","Products", new { id = (productId) });
 
         }

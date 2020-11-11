@@ -12,7 +12,11 @@ $('form#AddCartForm').submit(function (event) {
             quantity: q,
         }, // איזה מידע לשלוח לקובץ
         success: function (callback) { // ברגע שהבקשה נשלחה והצליחה , קבלה של נתונים חזרה - callback
-            alert("The product added to cart successfully");
+            if (callback == false) {
+                location.href = '/Accounts/Login/';
+            }
+            else
+                alert("The product added to cart successfully");
         },
         error: function (callback) {
             alert("Can't add this product to cart");
@@ -34,7 +38,11 @@ $('a.add-card').on("click", function (event) {
             productId: p,
         }, // איזה מידע לשלוח לקובץ
         success: function (callback) { // ברגע שהבקשה נשלחה והצליחה , קבלה של נתונים חזרה - callback
-            alert("The product added to cart successfully");
+            if (callback == false) {
+                location.href = '/Accounts/Login/';
+            }
+            else
+                alert("The product added to cart successfully");
         },
         error: function (callback) {
             alert("Can't add this product to cart");

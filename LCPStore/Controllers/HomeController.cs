@@ -9,6 +9,7 @@ using LCPStore.Models;
 using System.Collections;
 using LCPStore.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace LCPStore.Controllers
 {
@@ -26,11 +27,7 @@ namespace LCPStore.Controllers
         public IActionResult Index()
         {
 
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Accounts");
-            }
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             ViewBag.Categories = new ArrayList(_context.Category.ToList());
 
