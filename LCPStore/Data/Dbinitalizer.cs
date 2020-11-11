@@ -195,7 +195,7 @@ namespace LCPStore.Data
                                                 "It can hold six eggs at a time" +
                                                 "Material: PP / Size: 14.6 x 12.1 x 12.4 cm" +
                                                 "Package Content:" +
-                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3] },
+                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3], Image = 0xFFD8FFE000104A46494600010101004800480000FFDB0043000403030403030404030405040405060A07060606060D090A080A0F0D10100F0D0F0E11131814111217120E0F151C151719191B1B1B10141D1F1D1A1F181A1B1AFFDB0043010405050605060C07070C1A110F111A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A },
 
                       new Product{Name ="Cleaning Slippers Floor Mop Flip-Flops", Created = DateTime.Today,
                                   Description ="Clean your floor with every step and keep it shiny by wearing these cleaning slippers" +
