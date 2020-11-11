@@ -103,7 +103,7 @@ namespace LCPStore.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //Add To Cart
-        public async Task<bool> AddToCart(int productId, int quantity=1)
+        public async Task AddToCart(int productId, int quantity=1)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             //if (user == null)
@@ -145,7 +145,6 @@ namespace LCPStore.Controllers
                 }
 
             }
-            return true;
             //return RedirectToAction("ProductDetails","Products", new { id = (productId) });
 
         }

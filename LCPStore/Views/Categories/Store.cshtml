@@ -78,13 +78,14 @@
 
     <script id="results" type="text/html">
 
-
-         <div class="col-lg-4 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="~/img/single-product/1.jpg" alt="">
+                    <a href="/Products/ProductDetails/${id}">
+                        <img src="data:image/png;base64,${image}" alt="${name}">
+                    </a>
                     <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                        <a href="/Carts/AddToCart/${id}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                     </div>
                 </div>
                 <div class="pi-text">
@@ -93,10 +94,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </script>
 
-        }
+}
