@@ -186,7 +186,7 @@ namespace LCPStore.Data
                                             "Material: Silicone / Capacity: 10 ml" +
                                             "Size: 68 x 63 x 20 mm / Weight: 9 g / Elastic, Adult Size, Unisex (Sanitizer NOT Included)" +
                                             "Package Contents:" +
-                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3], Image = 0xFFD8FFE000104A46494600010200000100010000FFDB004300080606070605080707070909080A0C140D0C0B0B0C1912130F141D1A1F1E1D1A1C1C20242E2720222C231C1C2837292C30313434341F27393D38323C2E333432FFDB0043010909090C0B0C180D0D1832211C213232323232323232323232323232323232323232 },
+                                            "1 x Sanitizer Bracelet + 1 x Squeeze Pump Bottle" , Price = 17,Category=categories[3]},
 
                      new Product{Name ="Penguin Egg Holder Boiling Tool", Created = DateTime.Today,
                                 Description = "This penguin egg holder holds the eggs in place while it boils so they cook evenly and crack-free" +
@@ -195,7 +195,7 @@ namespace LCPStore.Data
                                                 "It can hold six eggs at a time" +
                                                 "Material: PP / Size: 14.6 x 12.1 x 12.4 cm" +
                                                 "Package Content:" +
-                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3], Image = 0xFFD8FFE000104A46494600010101004800480000FFDB0043000403030403030404030405040405060A07060606060D090A080A0F0D10100F0D0F0E11131814111217120E0F151C151719191B1B1B10141D1F1D1A1F181A1B1AFFDB0043010405050605060C07070C1A110F111A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A },
+                                                "1 x Penguin Egg Holder (6 Slots)" , Price = 24,Category=categories[3]},
 
                       new Product{Name ="Cleaning Slippers Floor Mop Flip-Flops", Created = DateTime.Today,
                                   Description ="Clean your floor with every step and keep it shiny by wearing these cleaning slippers" +
