@@ -1,4 +1,6 @@
-﻿using LCPStore.Models;
+﻿using LCPStore.Controllers;
+using LCPStore.Migrations;
+using LCPStore.Models;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,13 @@ namespace LCPStore.Data
 {
     public class Dbinitalizer
     {
+        private static object TotalPrice;
+        private static object ordersItems;
+
+        public static Order Order { get; private set; }
+        public static object OrderItems { get; private set; }
+        public static object OrdersItems { get; private set; }
+
         public static void Initialize(LCPStoreContext context)
         {
             context.Database.EnsureCreated();
@@ -27,11 +36,6 @@ namespace LCPStore.Data
                 new Category{Name = "Sports Accessories"}
             };
 
-
-            BigInteger[] image = new[]
-            {
-                BigInteger.Parse("0xFFD8FFE000104A46494600010102001C001C0000FFDB008400020202020202030303030404030404050504040505080606060606080C0709070709070C0B0D0A0A0A0D0B130F0D0D0F1316121112161A18181A2120212C2C3B01020202020202030303030404030404050504040505080606060606080C0709070709070C0B0D")
-            };
 
             foreach (Category c in categories)
             {
@@ -268,10 +272,10 @@ namespace LCPStore.Data
 
             var accounts = new Account[]
             {
-                new Account{Username="leelisker4@gmail.com",Password="1234",Gender=(Gender)1,Name="Likush",BirthDate=dateTimes[0], Registered = dateTimes[4], Role =(Role)0 },
-                new Account{Username="meitalzaguri95@gmail.com",Password="1234",Gender=(Gender)1,Name="Meital",BirthDate=dateTimes[1], Registered = dateTimes[5], Role =(Role)0 },
-                new Account{Username="liraz4@gmail.com",Password="1234",Gender=(Gender)1,Name="Liraz",BirthDate=dateTimes[2], Registered = dateTimes[6], Role =(Role)1 },
-                new Account{Username="Matan@gmail.com",Password="1234",Gender=(Gender)0,Name="Matan",BirthDate=dateTimes[3], Registered = dateTimes[7], Role =(Role)1 },
+                new Account{Username="leelisker4@gmail.com",Password="1234",Gender=(Gender)1,Name="Likush",BirthDate=dateTimes[0], Registered = dateTimes[4], Role =(Role)0, Cart= new Cart() },
+                new Account{Username="meitalzaguri95@gmail.com",Password="1234",Gender=(Gender)1,Name="Meital ",BirthDate=dateTimes[1], Registered = dateTimes[5], Role =(Role)0, Cart= new Cart() },
+                new Account{Username="liraz981@gmail.com",Password="1234",Gender=(Gender)1,Name="Liraz Mizrachi",BirthDate=dateTimes[2], Registered = dateTimes[6], Role =(Role)1, Cart= new Cart() },
+                new Account{Username="Mati340@gmail.com",Password="1234",Gender=(Gender)0,Name="Matan Katz",BirthDate=dateTimes[3], Registered = dateTimes[7], Role =(Role)0, Cart= new Cart() },
             };
 
             foreach (Account a in accounts)
@@ -279,12 +283,14 @@ namespace LCPStore.Data
                 context.Account.Add(a);
             }
 
+        
+
             var orders = new Order[]
             {
                 new Order{Country = "Israel", City = "Ashdod", Address = "Bareket 24", ZipCode = "1828373" ,PhoneNumber = "0521118765", TotalPay= 1630, Delivery = (Delivery)0, OrderTime = dateTimes[4] },
-                new Order{Country = "Israel", City = "Yavne", Address = "Maapilim 16", ZipCode = "1874859" ,PhoneNumber = "052999362", TotalPay= 1705, Delivery = (Delivery)1, OrderTime = dateTimes[5] },
-                new Order{Country = "Israel", City = "Eilat", Address = "Tamar 4", ZipCode = "7080000" ,PhoneNumber = "0546258943", TotalPay= 850, Delivery = (Delivery)0, OrderTime = dateTimes[6] },
-                new Order{Country = "Israel", City = "Tzfat", Address = "Hashmonaim", ZipCode = "7546789" ,PhoneNumber = "0509876523", TotalPay= 460, Delivery = (Delivery)1, OrderTime = dateTimes[7] },
+                new Order{Country = "Israel", City = "Yavne", Address = "Maapilim 16", ZipCode = "1874859" ,PhoneNumber = "052999362", TotalPay= 1705, Delivery = (Delivery)1, OrderTime = dateTimes[5]},
+                new Order{Country = "Israel", City = "Eilat", Address = "Tamar 4", ZipCode = "7080000" ,PhoneNumber = "0546258943", TotalPay= 850, Delivery = (Delivery)0, OrderTime = dateTimes[6]},
+                new Order{Country = "Israel", City = "Tzfat", Address = "Hashmonaim", ZipCode = "7546789" ,PhoneNumber = "0509876523", TotalPay= 460, Delivery = (Delivery)1, OrderTime = dateTimes[7]},
 
             };
 
@@ -292,6 +298,22 @@ namespace LCPStore.Data
 
             {
                 context.Order.Add(o);
+            }
+            OrderItem[] orderItems = new OrderItem[]
+     {
+                new OrderItem{ Quantity=2, Product=products[0], Order=orders[0], TotalPrice=3455 },
+                new OrderItem{ Quantity=1, Product=products[1], Order=orders[0],TotalPrice=43 },
+                new OrderItem{ Quantity=1, Product=products[7], Order=orders[1], TotalPrice=4545 },
+                new OrderItem{ Quantity=3, Product=products[3], Order=orders[2], TotalPrice=47778 },
+                new OrderItem{ Quantity=1, Product=products[9], Order=orders[2], TotalPrice=438 },
+                new OrderItem{ Quantity=1, Product=products[14], Order=orders[3], TotalPrice=8676 }
+
+
+     };
+            foreach (OrderItem oi in orderItems)
+
+            {
+                context.OrderItem.Add(oi);
             }
 
             context.SaveChanges();

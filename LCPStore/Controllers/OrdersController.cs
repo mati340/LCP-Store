@@ -90,7 +90,10 @@ namespace LCPStore.Controllers
                 order.TotalPay = cart.SumToPay;
                 foreach (var item in cart.CartItems)
                 {
-                    order.OrderItems.Add(new OrderItem() { Order = order, Product = item.Product, Quantity = item.Quantity, TotalPrice = item.TotalPrice });
+                    if(item.Quantity>0)
+                    {
+                        order.OrderItems.Add(new OrderItem() { Order = order, Product = item.Product, Quantity = item.Quantity, TotalPrice = item.TotalPrice });
+                    }
                 }
                 _context.Add(order);
                 cart.Order = order;
