@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace LCPStore
 {
@@ -49,15 +51,25 @@ namespace LCPStore
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.Use(async (context, next) =>
+            app.UseExceptionHandler(appError =>
             {
-                await next();
-                if (context.Response.StatusCode == 404)
+                appError.Run(async context =>
                 {
-                    context.Request.Path = "/Home/Error";
-                    await next();
-                }
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+                    var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    context.Response.Redirect("/Home/Error");
+                });
             });
+            //app.Use(async (context, next) =>
+            //{
+            //    await next();
+            //    if (context.Response.StatusCode == 404)
+            //    {
+            //        context.Request.Path = "/Home/Error";
+            //        await next();
+            //    }
+            //});
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -72,7 +84,9 @@ namespace LCPStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Categories}/{action=Store}/{id?}");
+
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }

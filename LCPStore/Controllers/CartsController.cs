@@ -21,7 +21,9 @@ namespace LCPStore.Controllers
         {
             _context = context; 
         }
-        public async Task<IActionResult> Plus(int id)
+
+        [HttpPost]
+        public async Task<double[]> Plus(int id)
         {
             var query = await _context.CartItem.Include(p=>p.Product).FirstOrDefaultAsync(s => s.Id == id);
             if (query != null)
@@ -31,10 +33,12 @@ namespace LCPStore.Controllers
                 await _context.SaveChangesAsync();
                 await UpdateSumToPay(query.Product.Price);
             }
-            return RedirectToAction(nameof(CartDetails));
+            double[] arr = { query.TotalPrice, query.Cart.SumToPay };
+            return arr;
         }
         
-        public async Task<IActionResult> Minus(int id)
+        [HttpPost]
+        public async Task<double[]> Minus(int id)
         {
             var query = await _context.CartItem.Include(p => p.Product).FirstOrDefaultAsync(s => s.Id == id);
             if (query != null)
@@ -44,7 +48,8 @@ namespace LCPStore.Controllers
                 await _context.SaveChangesAsync();
                 await UpdateSumToPay(-query.Product.Price);
             }
-            return RedirectToAction(nameof(CartDetails));
+            double[] arr = { query.TotalPrice, query.Cart.SumToPay };
+            return arr;
         }
 
         public async Task UpdateSumToPay(double price)
@@ -98,7 +103,7 @@ namespace LCPStore.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //Add To Cart
-        public async Task<bool> AddToCart(int productId, int quantity=1)
+        public async Task AddToCart(int productId, int quantity=1)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             //if (user == null)
@@ -140,7 +145,6 @@ namespace LCPStore.Controllers
                 }
 
             }
-            return true;
             //return RedirectToAction("ProductDetails","Products", new { id = (productId) });
 
         }

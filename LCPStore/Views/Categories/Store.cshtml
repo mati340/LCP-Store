@@ -28,12 +28,12 @@
                             <li>
                                 <a asp-action="Store" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
                                 @*<ul class="sub-menu">
-                                        <li><a href="#">Midi Dresses <span>(2)</span></a></li>
-                                        <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
-                                        <li><a href="#">Prom Dresses<span>(36)</span></a></li>
-                                        <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
-                                        <li><a href="#">Mini Dresses<span>(19)</span></a></li>
-                                    </ul>*@
+                                <li><a href="#">Midi Dresses <span>(2)</span></a></li>
+                                <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
+                                <li><a href="#">Prom Dresses<span>(36)</span></a></li>
+                                <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
+                                <li><a href="#">Mini Dresses<span>(19)</span></a></li>
+                            </ul>*@
                             </li>
                         }
                     </ul>
@@ -50,22 +50,50 @@
                             </span>
                         </div>
                         <div class="range-slider">
-                            <form asp-action="SearchByPrice" asp-controller="Categories">
-                                <div class="price-input">
-                                    <input type="text" name="minamount" id="minamount">
-                                    <input type="text" name="maxamount" id="maxamount">
-                                    <button id="filter-btn" class="site-btn">Filter</button>
-                                </div>
-                            </form>
+                            @*<form asp-action="SearchByPrice" asp-controller="Categories">*@
+                            <div class="price-input">
+                                <input type="text" name="minamount" id="minamount">
+                                <input type="text" name="maxamount" id="maxamount">
+                                <button id="filter-btn" class="site-btn">Filter</button>
+                            </div>
+                            @*</form>*@
                         </div>
                     </div>
                 </div>
             </div>
 
-                @await Html.PartialAsync("../Products/SearchProducts.cshtml", Model)
+            @await Html.PartialAsync("../Products/SearchProducts.cshtml", Model)
 
         </div>
     </div>
-    </div>
 </section>
+
+
 <!-- Category section end -->
+@section Scripts {
+
+
+    <script src="~/js/Products/Filter.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+    <script id="results" type="text/html">
+
+        <div class="col-lg-4 col-sm-6">
+            <div class="product-item">
+                <div class="pi-pic">
+                    <a href="/Products/ProductDetails/${id}">
+                        <img src="data:image/png;base64,${image}" alt="${name}">
+                    </a>
+                    <div class="pi-links">
+                        <a href="/Carts/AddToCart/${id}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                    </div>
+                </div>
+                <div class="pi-text">
+                    <h6>$ ${price},00</h6>
+                    <p>${name}</p>
+                </div>
+            </div>
+        </div>
+    </script>
+
+}
