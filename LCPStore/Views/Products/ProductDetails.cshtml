@@ -12,7 +12,7 @@
         <h4>Product Page</h4>
         <div class="site-pagination">
             <a asp-action="Index" asp-controller="Home">Home</a> /
-            <a href="">Shop</a>
+            <a asp-action="Store" asp-controller="Categories" asp-route-id="1" >Shop</a>
         </div>
     </div>
 </div>
@@ -85,13 +85,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="social-sharing">
-                    <a href=""><i class="fa fa-google-plus"></i></a>
-                    <a href=""><i class="fa fa-pinterest"></i></a>
-                    <a href=""><i class="fa fa-facebook"></i></a>
-                    <a href=""><i class="fa fa-twitter"></i></a>
-                    <a href=""><i class="fa fa-youtube"></i></a>
-                </div>
             </div>
         </div>
     </div>
@@ -110,15 +103,17 @@
             {
                 <div class="product-item">
                     <div class="pi-pic">
-                        @if (product.Image != null)
-                        {
-                            String img = Convert.ToBase64String(product.Image);
-                            <img src="data:image/png;base64,@img" />
-                        }
-                        else
-                        {
-                            <img src="~/img/single-product/1.jpg" alt="">
-                        }
+                        <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                            @if (product.Image != null)
+                            {
+                                String img = Convert.ToBase64String(product.Image);
+                                <img src="data:image/png;base64,@img" />
+                            }
+                            else
+                            {
+                                <img src="~/img/single-product/1.jpg" alt="">
+                            }
+                        </a>
                         <div class="pi-links" id="@product.Id">
                             <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
 

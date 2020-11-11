@@ -79,7 +79,7 @@ namespace LCPStore.Controllers
         public async Task<IActionResult> Create([Bind("Id,Country,City,Address,ZipCode,PhoneNumber,TotalPay,Delivery,OrderTime")] Order order)
         {
 
-            var user = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (user == null)
             {
                 return RedirectToAction("Login", "Accounts");
