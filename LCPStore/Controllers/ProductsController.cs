@@ -77,9 +77,8 @@ namespace LCPStore.Controllers
         {
             var products = await _context.Product.Where(s => s.Name.Contains(term)
                                                         || s.Description.Contains(term)).ToListAsync();
-            TempData["SearchProducts"] = "true";
-            ViewBag.Categories = new ArrayList(_context.Category.ToList());
-            return View("~/Views/Categories/Store.cshtml",products);
+            TempData["term"] = term;
+            return View(products);
         }
         
         private bool ProductExists(int id)
