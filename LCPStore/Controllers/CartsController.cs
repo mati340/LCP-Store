@@ -55,7 +55,7 @@ namespace LCPStore.Controllers
         public async Task UpdateSumToPay(double price)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Name == user);
+            var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Username == user);
             //if cart==null  TODO
             cart.SumToPay += price;
             await _context.SaveChangesAsync();

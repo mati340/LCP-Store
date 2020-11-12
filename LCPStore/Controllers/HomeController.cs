@@ -37,21 +37,24 @@ namespace LCPStore.Controllers
 
             //Relevant Products Per User
 
+
             var categories =(from orderItem in _context.OrderItem
-                             where (orderItem.Order.Account.Name == user)
+                             where (orderItem.Order.Account.Username == user)
                              select orderItem.Product.Category).ToList();
             
             if(categories.Count > 1)
             {
-                categories.ToList().Distinct().TakeLast(2);
+                IEnumerable<Category> Categories = categories.ToList().Distinct().TakeLast(2);
 
-                var RelevantProduct = (from p in _context.Product
-                                       where ((p.Category == categories.ToArray()[0]) || (p.Category == categories.ToArray()[1]))
-                                       select p);
-                if (RelevantProduct != null)
-                    RelevantProduct.ToList().Take(6);
+                var RelevantProduct = (from p in _context.Product.ToList()
+                               join c in Categories on p.Category.Id equals c.Id 
+                               select p).ToList();
 
-                ViewData["RelevantProducts"] = RelevantProduct;
+                if (RelevantProduct.Count > 1)
+                    ViewData["RelevantProducts"] = RelevantProduct.ToList().Take(6);
+                else
+                    ViewData["RelevantProducts"] = null;
+
             }
 
             return View();

@@ -85,7 +85,7 @@ namespace LCPStore.Controllers
                 return RedirectToAction("Login", "Accounts");
             }
 
-            Cart cart = await _context.Cart.Where(s => s.Account.Name == user)
+            Cart cart = await _context.Cart.Where(s => s.Account.Username == user)
                 .Include(c=>c.CartItems).ThenInclude(p=>p.Product)
                 .Include(a=>a.Account)
                 .FirstOrDefaultAsync<Cart>();
