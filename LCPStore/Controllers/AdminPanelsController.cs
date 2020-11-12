@@ -36,6 +36,7 @@ namespace LCPStore.Controllers
                 Categories = _context.Category.ToList(),
                 Contacts = _context.Contact.ToList(),
                 CartItems = _context.CartItem.Include(p => p.Product).ToList(),
+                OrderItems = _context.OrderItem.Include(p => p.Product).ToList(),
                 Carts = _context.Cart.Include(o => o.Account).ToList()
 
             };
@@ -742,6 +743,138 @@ namespace LCPStore.Controllers
 
 
         private bool CartItemExists(int id)
+        {
+            return _context.CartItem.Any(e => e.Id == id);
+        }
+
+        // GET: CartItems/Details/5
+        public async Task<IActionResult> OrderItemDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderItem = await _context.OrderItem
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Views/AdminPanels/OrderItems/Details.cshtml", orderItem);
+        }
+
+        // GET: CartItems/Create
+        public IActionResult OrderItemCreate()
+        {
+            ViewData["Accounts"] = new SelectList(_context.Account, "Id", "Name");
+            ViewData["Products"] = new SelectList(_context.Product, "Id", "Name");
+            return View("~/Views/AdminPanels/OrderItems/Create.cshtml");
+        }
+
+        // POST: CartItems/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OrderItemCreate([Bind("Id, Quantity, TotalPrice")] OrderItem orderItem, int productId, int accountId)
+        {
+            if (ModelState.IsValid)
+            {
+                orderItem.Order = await _context.Order.Include(a => a.Account).FirstOrDefaultAsync(p => p.Account.Id == accountId);
+                orderItem.Product = await _context.Product.FirstOrDefaultAsync(p => p.Id == productId);
+                orderItem.TotalPrice = orderItem.Product.Price * orderItem.Quantity;
+                _context.Add(orderItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Tables));
+            }
+            return View("~/Views/AdminPanels/OrderItems/Create.cshtml", orderItem);
+        }
+
+        // GET: orderItem/Edit/5
+        public async Task<IActionResult> OrderItemEdit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderItem = await _context.OrderItem.FindAsync(id);
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/AdminPanels/OrderItems/Edit.cshtml", orderItem);
+        }
+
+        // POST: CartItems/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OrderItemEdit(int id, [Bind("Id,Quantity,TotalPrice")] OrderItem orderItem)
+        {
+            if (id != orderItem.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(orderItem);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CartItemExists(orderItem.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Tables));
+            }
+            return View("~/Views/AdminPanels/OrderItems/Edit.cshtml", orderItem);
+        }
+
+        // GET: CartItems/Delete/5
+        public async Task<IActionResult> OrderItemDelete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderItem = await _context.OrderItem
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Views/AdminPanels/OrderItems/Delete.cshtml", orderItem);
+        }
+
+        // POST: CartItems/Delete/5
+        [HttpPost, ActionName("OrderItemDelete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OrderItemDeleteConfirmed(int id)
+        {
+            var orderItem = await _context.OrderItem.FindAsync(id);
+            _context.OrderItem.Remove(orderItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Tables));
+        }
+
+
+        private bool OrderItemExists(int id)
         {
             return _context.CartItem.Any(e => e.Id == id);
         }
