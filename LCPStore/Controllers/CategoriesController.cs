@@ -33,7 +33,7 @@ namespace LCPStore.Controllers
                 category = await _context.Category
                     .Include(p => p.Products)
                     .FirstAsync();
-                     return NotFound();
+                return Redirect("/Categories/Store/" + category.Id.ToString());
             }
             else if (!isValidId)
             {
