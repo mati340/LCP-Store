@@ -207,7 +207,23 @@ namespace LCPStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AccountDeleteConfirmed(int id)
         {
-            var account = await _context.Account.FindAsync(id);
+            var account = await _context.Account
+                .Include(c => c.Cart).ThenInclude(c => c.CartItems)
+                .Include(o => o.Orders).ThenInclude(o => o.OrderItems)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            foreach(CartItem ci in account.Cart.CartItems)
+            {
+                _context.CartItem.Remove(ci);
+            }
+            _context.Cart.Remove(account.Cart);      
+            foreach(Order o in account.Orders)
+            {
+                foreach(OrderItem oi in o.OrderItems)
+                {
+                    _context.OrderItem.Remove(oi);
+                }
+                _context.Order.Remove(o);
+            }
             _context.Account.Remove(account);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Tables));
@@ -1003,7 +1019,11 @@ namespace LCPStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CartDeleteConfirmed(int id)
         {
-            var cart = await _context.Cart.FindAsync(id);
+            var cart = await _context.Cart.Include(o => o.CartItems).FirstOrDefaultAsync(o => o.Id == id);
+            foreach (CartItem ci in cart.CartItems)
+            {
+                _context.CartItem.Remove(ci);
+            }
             _context.Cart.Remove(cart);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Tables));
@@ -1131,7 +1151,11 @@ namespace LCPStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OrderDeleteConfirmed(int id)
         {
-            var order = await _context.Order.FindAsync(id);
+            var order = await _context.Order.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
+            foreach(OrderItem ci in order.OrderItems)
+            {
+                _context.OrderItem.Remove(ci);
+            }
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Tables));
