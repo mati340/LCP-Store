@@ -37,9 +37,11 @@ namespace LCPStore
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
-            services.ConfigureApplicationCookie(options =>
+            services.AddOptions<CookieAuthenticationOptions>(
+                    CookieAuthenticationDefaults.AuthenticationScheme)
+            .Configure((options) =>
             {
-                options.LoginPath = "/Identity/Accounts/Login";
+                options.LoginPath = "/Accounts/Login";
             });
         }
 
