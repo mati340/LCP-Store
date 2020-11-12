@@ -29,7 +29,7 @@ namespace LCPStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Id,Username,Password,Gender,Name,BirthDate,Registered,Role")] Account account, string re_pass, string agree_term)
+        public async Task<IActionResult> Register([Bind("Id,Username,Password,Gender,Name,BirthDate,Registered")] Account account, string re_pass, string agree_term)
         {
             if(agree_term != "true")
             {
@@ -52,6 +52,7 @@ namespace LCPStore.Controllers
             {
                 account.Cart = new Cart();
                 account.Registered = DateTime.Now;
+                account.Role = (Role)1;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 SignIn(account);
