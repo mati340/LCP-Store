@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -22,10 +23,13 @@ namespace LCPStore.Models
         [Required]
         public string Address { get; set; }
         [Required]
+        [DisplayName("Zip Code")]
         public string ZipCode { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
+        [DisplayName("Total Pay")]
         public double TotalPay { get; set; }
         public Delivery Delivery { get; set; }
         public Account Account { get; set; }
