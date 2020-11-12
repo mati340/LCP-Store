@@ -37,7 +37,7 @@ namespace LCPStore.Controllers
             //Relevant Products Per User
 
             var categories =(from orderItem in _context.OrderItem
-                             where (orderItem.Order.Account.Name == user)
+                             where (orderItem.Order.Account.Username == user)
                              select orderItem.Product.Category).ToList();
             
             if(categories.Count > 1)
@@ -57,11 +57,6 @@ namespace LCPStore.Controllers
         }
 
         public IActionResult AboutUs()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
