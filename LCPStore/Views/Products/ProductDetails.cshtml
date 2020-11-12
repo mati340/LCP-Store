@@ -99,33 +99,37 @@
         <div class="product-slider owl-carousel">
 
             @{ var products = (IEnumerable<LCPStore.Models.Product>)ViewData["RelatedProducts"]; }
-            @foreach (var product in products)
+            @if (products != null)
             {
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
-                            @if (product.Image != null)
-                            {
-                                String img = Convert.ToBase64String(product.Image);
-                                <img src="data:image/png;base64,@img" />
-                            }
-                            else
-                            {
-                                <img src="~/img/single-product/1.jpg" alt="">
-                            }
-                        </a>
-                        <div class="pi-links" id="@product.Id">
-                            <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
+                @foreach (var product in products)
+                {
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                                @if (product.Image != null)
+                                {
+                                    String img = Convert.ToBase64String(product.Image);
+                                    <img src="data:image/png;base64,@img" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/single-product/1.jpg" alt="">
+                                }
+                            </a>
+                            <div class="pi-links" id="@product.Id">
+                                <a class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>                                @*<a class="link-product-add-cart" asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">Details</a>*@
 
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>$@product.Price,00</h6>
+                            <p>@product.Name </p>
                         </div>
                     </div>
-                    <div class="pi-text">
-                        <h6>$@product.Price,00</h6>
-                        <p>@product.Name </p>
-                    </div>
-                </div>
 
+                }
             }
+
         </div>
     </div>
 </section>

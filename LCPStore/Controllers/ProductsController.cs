@@ -38,8 +38,18 @@ namespace LCPStore.Controllers
                 return NotFound();
             }
 
-            var products = product.Category.Products.Take(5).ToList();
-            ViewData["RelatedProducts"] = products;
+            var products = (from p in _context.Product.ToList()
+                     join c in _context.Category.ToList()
+                     on p.Category equals product.Category
+                     select p).ToList();
+            
+            if(products.Count>0)
+            {
+                ViewData["RelatedProducts"] = products.ToList().Distinct();
+            }
+            else
+                ViewData["RelatedProducts"] = null;
+
 
             return View(product);
         }
