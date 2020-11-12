@@ -9,7 +9,7 @@ using LCPStore.Data;
 using LCPStore.Models;
 using Microsoft.CodeAnalysis;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace LCPStore.Controllers
 {
@@ -22,6 +22,7 @@ namespace LCPStore.Controllers
             _context = context; 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<double[]> Plus(int id)
         {
@@ -36,7 +37,8 @@ namespace LCPStore.Controllers
             double[] arr = { query.TotalPrice, query.Cart.SumToPay };
             return arr;
         }
-        
+
+        [Authorize]
         [HttpPost]
         public async Task<double[]> Minus(int id)
         {
@@ -52,15 +54,17 @@ namespace LCPStore.Controllers
             return arr;
         }
 
+        [Authorize]
         public async Task UpdateSumToPay(double price)
         {
             var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Name == user);
+            var cart = await _context.Cart.FirstOrDefaultAsync(s => s.Account.Username == user);
             //if cart==null  TODO
             cart.SumToPay += price;
             await _context.SaveChangesAsync();
         }
 
+        [Authorize]
         // GET: Carts/Details/1
         public async Task<IActionResult> CartDetails(int? id)
         {
@@ -93,6 +97,7 @@ namespace LCPStore.Controllers
             return View(cart);
         }
 
+        [Authorize]
         // GET: Carts
         public async Task<IActionResult> Index()
         {
@@ -150,6 +155,7 @@ namespace LCPStore.Controllers
 
         }
 
+        [Authorize]
         public async Task AddProduct(int id)
         {
             this.AddToCart(id,1);

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LCPStore.Data;
 using LCPStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LCPStore.Controllers
 {
+    [Authorize]
     public class CartItemsController : Controller
     {
         private readonly LCPStoreContext _context;

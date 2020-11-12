@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using LCPStore.Data;
 using LCPStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LCPStore.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminPanelsController : Controller
     {
         private readonly LCPStoreContext _context;
